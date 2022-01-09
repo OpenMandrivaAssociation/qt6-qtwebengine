@@ -84,6 +84,8 @@ BuildRequires:	python2
 # Not really required, but referenced by LLVMExports.cmake
 # (and then required because of the integrity check)
 BuildRequires:	%{_lib}gpuruntime
+# FIXME switch to shared library (port patch from qt5)
+BuildRequires:	stdc++-static-devel
 License:	LGPLv3/GPLv3/GPLv2
 
 %description
