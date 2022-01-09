@@ -34,6 +34,49 @@ BuildRequires:	qt%{major}-qtdeclarative-devel
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(xkbcommon)
 BuildRequires:	pkgconfig(vulkan)
+BuildRequires:	pkgconfig(openssl)
+BuildRequires:	gn
+BuildRequires:	gperf
+BuildRequires:	bison
+BuildRequires:	flex
+BuildRequires:	pkgconfig(snappy)
+BuildRequires:	nodejs
+BuildRequires:	pkgconfig(dbus-1)
+BuildRequires:	pkgconfig(fontconfig)
+BuildRequires:	pkgconfig(libdrm)
+BuildRequires:	pkgconfig(xcomposite)
+BuildRequires:	pkgconfig(xcursor)
+BuildRequires:	pkgconfig(xi)
+BuildRequires:	pkgconfig(xrandr)
+BuildRequires:	pkgconfig(xshmfence)
+BuildRequires:	pkgconfig(xtst)
+BuildRequires:	pkgconfig(nss) >= 3.26
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(glproto)
+BuildRequires:	pkgconfig(glib-2.0) >= 2.32.0
+BuildRequires:	pkgconfig(harfbuzz) >= 2.4.0
+BuildRequires:	pkgconfig(harfbuzz-subset) >= 2.4.0
+BuildRequires:	pkgconfig(libjpeg)
+BuildRequires:	pkgconfig(libevent)
+BuildRequires:	pkgconfig(minizip)
+BuildRequires:	pkgconfig(libpng) >= 1.6.0
+BuildRequires:	pkgconfig(zlib)
+BuildRequires:	pkgconfig(re2)
+BuildRequires:	pkgconfig(icu-uc)
+BuildRequires:	pkgconfig(icu-i18n)
+BuildRequires:	pkgconfig(libwebp)
+BuildRequires:	pkgconfig(libwebpmux)
+BuildRequires:	pkgconfig(libwebpdemux)
+BuildRequires:	pkgconfig(lcms2)
+BuildRequires:	pkgconfig(freetype2)
+BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(libxslt)
+BuildRequires:	pkgconfig(libavcodec)
+BuildRequires:	pkgconfig(libavformat)
+BuildRequires:	pkgconfig(libavutil)
+BuildRequires:	pkgconfig(opus) >= 1.3.1
+BuildRequires:	pkgconfig(vpx) >= 1.10.0
+BuildRequires:	pkgconfig(libpci)
 BuildRequires:	cmake(LLVM)
 BuildRequires:	cmake(Clang)
 # FIXME this is ridiculous and really really needs to go
