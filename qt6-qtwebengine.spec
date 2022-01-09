@@ -28,6 +28,12 @@ BuildRequires:	%{_lib}Qt%{major}PrintSupport-devel
 BuildRequires:	%{_lib}Qt%{major}OpenGL-devel
 BuildRequires:	%{_lib}Qt%{major}OpenGLWidgets-devel
 BuildRequires:	%{_lib}Qt%{major}DBus-devel
+#BuildRequires:	%{_lib}Qt%{major}Positioning-devel
+#BuildRequires:	%{_lib}Qt%{major}WebChannel-devel
+#BuildRequires:	%{_lib}Qt%{major}WebSockets-devel
+BuildRequires:	cmake(Qt%{major}Test)
+BuildRequires:	cmake(Qt%{major}QuickTest)
+BuildRequires:	cmake(Qt%{major}Designer)
 BuildRequires:	qt%{major}-cmake
 BuildRequires:	qt%{major}-qtdeclarative
 BuildRequires:	qt%{major}-qtdeclarative-devel
@@ -77,6 +83,9 @@ BuildRequires:	pkgconfig(libavutil)
 BuildRequires:	pkgconfig(opus) >= 1.3.1
 BuildRequires:	pkgconfig(vpx) >= 1.10.0
 BuildRequires:	pkgconfig(libpci)
+BuildRequires:	pkgconfig(alsa)
+BuildRequires:	pkgconfig(libpulse)
+BuildRequires:	pkgconfig(libpipewire-0.3)
 BuildRequires:	cmake(LLVM)
 BuildRequires:	cmake(Clang)
 # FIXME this is ridiculous and really really needs to go
@@ -150,7 +159,18 @@ done)}
 %cmake -G Ninja \
 	-DCMAKE_INSTALL_PREFIX=%{_qtdir} \
 	-DQT_BUILD_EXAMPLES:BOOL=ON \
-	-DQT_WILL_INSTALL:BOOL=ON
+	-DQT_WILL_INSTALL:BOOL=ON \
+	-DFEATURE_qtpdf_build:BOOL=ON \
+	-DFEATURE_qtpdf_quick_build:BOOL=ON \
+	-DFEATURE_qtpdf_widgets_build:BOOL=ON \
+	-DFEATURE_webengine_geolocation:BOOL=ON \
+	-DFEATURE_webengine_proprietary_codecs:BOOL=ON \
+	-DFEATURE_webengine_system_ffmpeg:BOOL=ON \
+	-DFEATURE_webengine_system_icu:BOOL=ON \
+	-DFEATURE_webengine_system_libevent:BOOL=ON \
+	-DFEATURE_webengine_system_ninja:BOOL=ON \
+	-DFEATURE_webengine_webchannel:BOOL=ON \
+	-DFEATURE_webengine_webrtc_pipewire:BOOL=ON
 
 %build
 export LD_LIBRARY_PATH="$(pwd)/build/lib:${LD_LIBRARY_PATH}"
