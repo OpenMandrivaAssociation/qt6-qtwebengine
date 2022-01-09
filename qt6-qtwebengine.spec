@@ -163,13 +163,11 @@ done)}
 	-DFEATURE_qtpdf_build:BOOL=ON \
 	-DFEATURE_qtpdf_quick_build:BOOL=ON \
 	-DFEATURE_qtpdf_widgets_build:BOOL=ON \
-	-DFEATURE_webengine_geolocation:BOOL=ON \
 	-DFEATURE_webengine_proprietary_codecs:BOOL=ON \
 	-DFEATURE_webengine_system_ffmpeg:BOOL=ON \
 	-DFEATURE_webengine_system_icu:BOOL=ON \
 	-DFEATURE_webengine_system_libevent:BOOL=ON \
 	-DFEATURE_webengine_system_ninja:BOOL=ON \
-	-DFEATURE_webengine_webchannel:BOOL=ON \
 	-DFEATURE_webengine_webrtc_pipewire:BOOL=ON
 
 %build
