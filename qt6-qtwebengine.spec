@@ -107,7 +107,7 @@ License:	LGPLv3/GPLv3/GPLv2
 %description
 Qt %{major} Quick timeline plugin
 
-%define libs WebEngineCore WebEngineQuick WebEngineWidgets WebEngineQuickDelegatesQml
+%define libs WebEngineCore WebEngineQuick WebEngineWidgets WebEngineQuickDelegatesQml Pdf PdfQuick PdfWidgets
 %{expand:%(for lib in %{libs}; do
 	cat <<EOF
 %%global lib${lib} %%mklibname Qt%{major}${lib} %{major}
@@ -122,7 +122,13 @@ Qt %{major} ${lib} library
 %%files -n %%{lib${lib}}
 %{_qtdir}/lib/libQt%{major}${lib}.so.*
 %{_libdir}/libQt%{major}${lib}.so.*
+EOF
 
+	if [ "$lib" = "Pdf" ]; then
+		echo '%{_qtdir}/plugins/imageformats/libqpdf.so'
+	fi
+
+	cat <<EOF
 %%package -n %%{dev${lib}}
 Summary: Development files for the Qt %{major} ${lib} library
 Requires: %%{lib${lib}} = %{EVRD}
