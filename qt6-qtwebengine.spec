@@ -17,6 +17,7 @@ Patch0:		qtwebengine-6.2.2-glibc-2.34.patch
 # FIXME if we patch it to use system harfbuzz, we don't
 # have to fix the broken internal copy anymore
 Patch1:		qtwebengine-6.2.2-fix-harfbuzz.patch
+Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
 Group:		System/Libraries
 Summary:	Qt %{major} Quick Timeline plugin
 BuildRequires:	cmake

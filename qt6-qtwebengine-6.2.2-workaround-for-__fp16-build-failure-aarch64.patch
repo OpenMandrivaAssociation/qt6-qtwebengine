@@ -1,0 +1,12 @@
+diff -up qtwebengine-everywhere-src-6.2.2/src/3rdparty/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h.omv~ qtwebengine-everywhere-src-6.2.2/src/3rdparty/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h
+--- qtwebengine-everywhere-src-6.2.2/src/3rdparty/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h.omv~	2022-01-10 12:50:40.803539132 +0100
++++ qtwebengine-everywhere-src-6.2.2/src/3rdparty/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h	2022-01-10 12:51:15.767627401 +0100
+@@ -1002,7 +1002,7 @@ SI F from_half(U16 h) {
+ }
+ 
+ SI U16 to_half(F f) {
+-#if defined(JUMPER_IS_NEON) && defined(SK_CPU_ARM64) \
++#if 0 && defined(JUMPER_IS_NEON) && defined(SK_CPU_ARM64) \
+     && !defined(SK_BUILD_FOR_GOOGLE3)  // Temporary workaround for some Google3 builds.
+ #if defined(SK_BUILD_FOR_MAC)
+     return vcvt_f16_f32(f);
