@@ -202,7 +202,6 @@ done
 %{_qtdir}/libexec/qwebengine_convert_dict
 %{_qtdir}/plugins/designer/libqwebengineview.so
 %{_qtdir}/qml/QtWebEngine
-%{_qtdir}/resources/icudtl.dat
 %{_qtdir}/resources/qtwebengine_devtools_resources.pak
 %{_qtdir}/resources/qtwebengine_resources.pak
 %{_qtdir}/resources/qtwebengine_resources_100p.pak
