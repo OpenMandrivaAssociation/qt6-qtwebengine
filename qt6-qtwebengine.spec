@@ -92,6 +92,7 @@ BuildRequires:	pkgconfig(libpulse-mainloop-glib)
 BuildRequires:	pkgconfig(libpipewire-0.3)
 BuildRequires:	pkgconfig(xscrnsaver)
 BuildRequires:	pkgconfig(xdamage)
+BuildRequires:	pkgconfig(xkbfile)
 BuildRequires:	cmake(LLVM)
 BuildRequires:	cmake(Clang)
 # FIXME this is ridiculous and really really needs to go
