@@ -126,6 +126,8 @@ EOF
 
 	if [ "$lib" = "Pdf" ]; then
 		echo '%{_qtdir}/plugins/imageformats/libqpdf.so'
+	elif [ "$lib" = "PdfQuick" ]; then
+		echo '%{_qtdir}/qml/QtQuick/Pdf'
 	fi
 
 	cat <<EOF
@@ -161,6 +163,11 @@ EOF
 %{_libdir}/cmake/Qt6Designer/*.cmake
 %{_libdir}/cmake/Qt6Qml/QmlPlugins/Qt6qtwebenginequickdelegatesplugin[A-Z]*.cmake
 %{_libdir}/cmake/Qt6Qml/QmlPlugins/Qt6qtwebenginequickplugin[A-Z]*.cmake
+EOF
+	elif [ "${lib}" = "Pdf" ]; then
+		cat <<EOF
+%{_libdir}/cmake/Qt6Gui/Qt6QPdfPlugin*.cmake
+%{_libdir}/cmake/Qt6Qml/QmlPlugins/Qt6qtpdfquickplugin*.cmake
 EOF
 	fi
 done)}
@@ -224,3 +231,5 @@ Sample code demonstrating the use of %{name}
 %files examples
 %{_qtdir}/examples/webenginequick
 %{_qtdir}/examples/webenginewidgets
+%{_qtdir}/examples/pdf
+%{_qtdir}/examples/pdfwidgets
