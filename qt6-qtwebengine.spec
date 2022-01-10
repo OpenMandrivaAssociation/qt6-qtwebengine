@@ -14,6 +14,9 @@ Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
 Source:		http://download.qt-project.org/%{?beta:development}%{!?beta:official}_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}%{?beta:-%{beta}}/submodules/qtwebengine-everywhere-src-%{version}%{?beta:-%{beta}}.tar.xz
 %endif
 Patch0:		qtwebengine-6.2.2-glibc-2.34.patch
+# FIXME if we patch it to use system harfbuzz, we don't
+# have to fix the broken internal copy anymore
+Patch1:		qtwebengine-6.2.2-fix-harfbuzz.patch
 Group:		System/Libraries
 Summary:	Qt %{major} Quick Timeline plugin
 BuildRequires:	cmake
@@ -28,9 +31,9 @@ BuildRequires:	%{_lib}Qt%{major}PrintSupport-devel
 BuildRequires:	%{_lib}Qt%{major}OpenGL-devel
 BuildRequires:	%{_lib}Qt%{major}OpenGLWidgets-devel
 BuildRequires:	%{_lib}Qt%{major}DBus-devel
-#BuildRequires:	%{_lib}Qt%{major}Positioning-devel
-#BuildRequires:	%{_lib}Qt%{major}WebChannel-devel
-#BuildRequires:	%{_lib}Qt%{major}WebSockets-devel
+BuildRequires:	%{_lib}Qt%{major}Positioning-devel
+BuildRequires:	%{_lib}Qt%{major}WebChannel-devel
+BuildRequires:	%{_lib}Qt%{major}WebSockets-devel
 BuildRequires:	cmake(Qt%{major}Test)
 BuildRequires:	cmake(Qt%{major}QuickTest)
 BuildRequires:	cmake(Qt%{major}Designer)
@@ -85,7 +88,10 @@ BuildRequires:	pkgconfig(vpx) >= 1.10.0
 BuildRequires:	pkgconfig(libpci)
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(libpulse)
+BuildRequires:	pkgconfig(libpulse-mainloop-glib)
 BuildRequires:	pkgconfig(libpipewire-0.3)
+BuildRequires:	pkgconfig(xscrnsaver)
+BuildRequires:	pkgconfig(xdamage)
 BuildRequires:	cmake(LLVM)
 BuildRequires:	cmake(Clang)
 # FIXME this is ridiculous and really really needs to go
