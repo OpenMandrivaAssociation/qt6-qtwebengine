@@ -51,6 +51,7 @@ BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	pkgconfig(snappy)
 BuildRequires:	nodejs
+BuildRequires:	pkgconfig(cups)
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(libdrm)
