@@ -6,7 +6,7 @@
 
 Name:		qt6-qtwebengine
 Version:	6.2.2
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}2
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}3
 %if 0%{?snapshot:1}
 # "git archive"-d from "dev" branch of git://code.qt.io/qt/qtbase.git
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
@@ -18,6 +18,7 @@ Patch0:		qtwebengine-6.2.2-glibc-2.34.patch
 # have to fix the broken internal copy anymore
 Patch1:		qtwebengine-6.2.2-fix-harfbuzz.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
+Patch3:		qtwebengine-6.2.2-ffmpeg-5.0.patch
 Group:		System/Libraries
 Summary:	Qt %{major} Quick Timeline plugin
 BuildRequires:	cmake
