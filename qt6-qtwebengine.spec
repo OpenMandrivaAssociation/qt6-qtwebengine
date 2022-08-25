@@ -49,6 +49,7 @@ BuildRequires:	pkgconfig(xkbcommon)
 BuildRequires:	pkgconfig(vulkan)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(gbm)
+BuildRequires:	pkgconfig(epoxy)
 BuildRequires:	gn
 BuildRequires:	gperf
 BuildRequires:	bison
