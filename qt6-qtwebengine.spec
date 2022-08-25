@@ -1,11 +1,11 @@
-#define beta rc
+%define beta beta3
 #define snapshot 20200627
 %define major 6
 
 %define _qtdir %{_libdir}/qt%{major}
 
 Name:		qt6-qtwebengine
-Version:	6.2.3
+Version:	6.4.0
 Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # "git archive"-d from "dev" branch of git://code.qt.io/qt/qtbase.git
@@ -13,35 +13,32 @@ Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
 %else
 Source:		http://download.qt-project.org/%{?beta:development}%{!?beta:official}_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}%{?beta:-%{beta}}/submodules/qtwebengine-everywhere-src-%{version}%{?beta:-%{beta}}.tar.xz
 %endif
-Patch0:		qtwebengine-6.2.2-glibc-2.34.patch
-# FIXME if we patch it to use system harfbuzz, we don't
-# have to fix the broken internal copy anymore
-Patch1:		qtwebengine-6.2.2-fix-harfbuzz.patch
+Patch1:		qtwebengine-6.4.0b3-buildfixes.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
-Patch3:		qtwebengine-6.2.2-ffmpeg-5.0.patch
 Group:		System/Libraries
-Summary:	Qt %{major} Quick Timeline plugin
+Summary:	Qt %{major} Web Engine - a web browser library for Qt
 BuildRequires:	cmake
 BuildRequires:	ninja
-BuildRequires:	%{_lib}Qt%{major}Core-devel
-BuildRequires:	%{_lib}Qt%{major}Gui-devel
-BuildRequires:	%{_lib}Qt%{major}Network-devel
-BuildRequires:	%{_lib}Qt%{major}Xml-devel
-BuildRequires:	%{_lib}Qt%{major}Widgets-devel
-BuildRequires:	%{_lib}Qt%{major}Sql-devel
-BuildRequires:	%{_lib}Qt%{major}PrintSupport-devel
-BuildRequires:	%{_lib}Qt%{major}OpenGL-devel
-BuildRequires:	%{_lib}Qt%{major}OpenGLWidgets-devel
-BuildRequires:	%{_lib}Qt%{major}DBus-devel
-BuildRequires:	%{_lib}Qt%{major}Positioning-devel
-BuildRequires:	%{_lib}Qt%{major}WebChannel-devel
-BuildRequires:	%{_lib}Qt%{major}WebSockets-devel
+BuildRequires:	cmake(Qt%{major}Core)
+BuildRequires:	cmake(Qt%{major}Gui)
+BuildRequires:	cmake(Qt%{major}Network)
+BuildRequires:	cmake(Qt%{major}Xml)
+BuildRequires:	cmake(Qt%{major}Widgets)
+BuildRequires:	cmake(Qt%{major}Sql)
+BuildRequires:	cmake(Qt%{major}PrintSupport)
+BuildRequires:	cmake(Qt%{major}OpenGL)
+BuildRequires:	cmake(Qt%{major}OpenGLWidgets)
+BuildRequires:	cmake(Qt%{major}DBus)
+BuildRequires:	cmake(Qt%{major}Positioning)
+BuildRequires:	cmake(Qt%{major}WebChannel)
+BuildRequires:	cmake(Qt%{major}WebSockets)
 BuildRequires:	cmake(Qt%{major}Test)
 BuildRequires:	cmake(Qt%{major}QuickTest)
 BuildRequires:	cmake(Qt%{major}Designer)
+BuildRequires:	cmake(Qt%{major}UiPlugin)
+BuildRequires:	cmake(Qt%{major}Svg)
 BuildRequires:	qt%{major}-cmake
 BuildRequires:	qt%{major}-qtdeclarative
-BuildRequires:	qt%{major}-qtdeclarative-devel
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(xkbcommon)
 BuildRequires:	pkgconfig(vulkan)
@@ -98,8 +95,8 @@ BuildRequires:	pkgconfig(xdamage)
 BuildRequires:	pkgconfig(xkbfile)
 BuildRequires:	cmake(LLVM)
 BuildRequires:	cmake(Clang)
-# FIXME this is ridiculous and really really needs to go
-BuildRequires:	python2
+BuildRequires:	python3dist(html5lib)
+BuildRequires:	qt6-qttools-designer
 # Not really required, but referenced by LLVMExports.cmake
 # (and then required because of the integrity check)
 BuildRequires:	%{_lib}gpuruntime
@@ -108,77 +105,66 @@ BuildRequires:	stdc++-static-devel
 License:	LGPLv3/GPLv3/GPLv2
 
 %description
-Qt %{major} Quick timeline plugin
+Qt %{major} Web Engine - a web browser library for Qt
 
-%define libs WebEngineCore WebEngineQuick WebEngineWidgets WebEngineQuickDelegatesQml Pdf PdfQuick PdfWidgets
-%{expand:%(for lib in %{libs}; do
-	cat <<EOF
-%%global lib${lib} %%mklibname Qt%{major}${lib} %{major}
-%%global dev${lib} %%mklibname -d Qt%{major}${lib}
-%%package -n %%{lib${lib}}
-Summary: Qt %{major} ${lib} library
-Group: System/Libraries
+%package designer
+Summary: Qt Designer integration for QtWebEngine
+Group: Development/C
+Requires: qt%{major}-qttools-designer
+Supplements: qt%{major}-qttools-designer
 
-%%description -n %%{lib${lib}}
-Qt %{major} ${lib} library
+%description designer
+Qt Designer integration for QtWebEngine
 
-%%files -n %%{lib${lib}}
-%{_qtdir}/lib/libQt%{major}${lib}.so.*
-%{_libdir}/libQt%{major}${lib}.so.*
-EOF
+%files designer
+%{_qtdir}/plugins/designer/libqwebengineview.so
 
-	if [ "$lib" = "Pdf" ]; then
-		echo '%{_qtdir}/plugins/imageformats/libqpdf.so'
-	elif [ "$lib" = "PdfQuick" ]; then
-		echo '%{_qtdir}/qml/QtQuick/Pdf'
-	fi
+%global extra_files_WebEngineCore \
+%{_qtdir}/libexec/QtWebEngineProcess \
+%{_qtdir}/resources/qtwebengine_devtools_resources.pak \
+%{_qtdir}/resources/qtwebengine_resources.pak \
+%{_qtdir}/resources/qtwebengine_resources_100p.pak \
+%{_qtdir}/resources/qtwebengine_resources_200p.pak
 
-	cat <<EOF
-%%package -n %%{dev${lib}}
-Summary: Development files for the Qt %{major} ${lib} library
-Requires: %%{lib${lib}} = %{EVRD}
-Group: Development/KDE and Qt
+%global extra_devel_files_WebEngineCore \
+%{_qtdir}/lib/cmake/Qt6/FindGPerf.cmake \
+%{_qtdir}/lib/cmake/Qt6/FindGn.cmake \
+%{_qtdir}/lib/cmake/Qt6/FindNinja.cmake \
+%{_qtdir}/lib/cmake/Qt6/FindNodejs.cmake \
+%{_qtdir}/lib/cmake/Qt6/FindPkgConfigHost.cmake \
+%{_qtdir}/lib/cmake/Qt6/FindSnappy.cmake \
+%{_qtdir}/lib/cmake/Qt6BuildInternals/StandaloneTests/QtWebEngineTestsConfig.cmake \
+%{_qtdir}/lib/cmake/Qt6Designer/Qt6QWebEngineViewPlugin*.cmake \
+%{_qtdir}/libexec/gn \
+%{_qtdir}/libexec/qwebengine_convert_dict
 
-%%description -n %%{dev${lib}}
-Development files for the Qt %{major} ${lib} library
+%global extra_devel_files_Pdf \
+%{_qtdir}/lib/cmake/Qt6Gui/Qt6QPdfPlugin*.cmake
 
-%%files -n %%{dev${lib}}
-%{_qtdir}/lib/libQt%{major}${lib}.so
-%{_libdir}/libQt%{major}${lib}.so
-%{_qtdir}/lib/libQt%{major}${lib}.prl
-%optional %{_qtdir}/include/Qt${lib}
-%optional %{_qtdir}/modules/${lib}.json
-%optional %{_qtdir}/modules/${lib}Private.json
-%optional %{_libdir}/cmake/Qt%{major}${lib}
-%optional %{_libdir}/cmake/Qt%{major}${lib}Private
-%optional %{_qtdir}/lib/cmake/Qt%{major}${lib}
-%optional %{_qtdir}/lib/metatypes/qt%{major}$(echo ${lib}|tr A-Z a-z)_relwithdebinfo_metatypes.json
-%optional %{_qtdir}/lib/metatypes/qt%{major}$(echo ${lib}|tr A-Z a-z)private_relwithdebinfo_metatypes.json
-%optional %{_qtdir}/mkspecs/modules/qt_lib_$(echo ${lib}|tr A-Z a-z).pri
-%optional %{_qtdir}/mkspecs/modules/qt_lib_$(echo ${lib}|tr A-Z a-z)_private.pri
-%optional %{_libdir}/cmake/Qt%{major}${lib}Tools
-EOF
+%global extra_devel_files_PdfQuick \
+%{_qtdir}/lib/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickplugin*.cmake
 
-	if [ "${lib}" = "WebEngineQuick" ]; then
-		cat <<EOF
-%{_libdir}/cmake/Qt6/*.cmake
-%{_libdir}/cmake/Qt6BuildInternals/StandaloneTests/QtWebEngineTestsConfig.cmake
-%{_libdir}/cmake/Qt6Designer/*.cmake
-%{_libdir}/cmake/Qt6Qml/QmlPlugins/Qt6qtwebenginequickdelegatesplugin[A-Z]*.cmake
-%{_libdir}/cmake/Qt6Qml/QmlPlugins/Qt6qtwebenginequickplugin[A-Z]*.cmake
-EOF
-	elif [ "${lib}" = "Pdf" ]; then
-		cat <<EOF
-%{_libdir}/cmake/Qt6Gui/Qt6QPdfPlugin*.cmake
-%{_libdir}/cmake/Qt6Qml/QmlPlugins/Qt6qtpdfquickplugin*.cmake
-EOF
-	fi
-done)}
+%global extra_files_WebEngineQuick \
+%{_qtdir}/qml/QtWebEngine
+
+%global extra_devel_files_WebEngineQuick \
+%{_qtdir}/lib/cmake/Qt6Qml/QmlPlugins/Qt6qtwebenginequickdelegatesplugin*.cmake \
+%{_qtdir}/lib/cmake/Qt6Qml/QmlPlugins/Qt6qtwebenginequickplugin*.cmake
+
+%global extra_files_Pdf \
+%{_qtdir}/plugins/imageformats/libqpdf.so
+
+%global extra_files_PdfQuick \
+%{_qtdir}/qml/QtQuick/Pdf
+
+%qt6libs WebEngineCore WebEngineQuick WebEngineWidgets WebEngineQuickDelegatesQml Pdf PdfQuick PdfWidgets
 
 %prep
 %autosetup -p1 -n qtwebengine%{!?snapshot:-everywhere-src-%{version}%{?beta:-%{beta}}}
-# FIXME why are OpenGL lib paths autodetected incorrectly, preferring
-# /usr/lib over /usr/lib64 even on 64-bit boxes?
+
+# Python 3.11 support for upstream bits
+find src/3rdparty -name "*.py" |xargs sed -i -e "s,'rU','r',g"
+
 %cmake -G Ninja \
 	-DCMAKE_INSTALL_PREFIX=%{_qtdir} \
 	-DQT_BUILD_EXAMPLES:BOOL=ON \
@@ -186,6 +172,12 @@ done)}
 	-DFEATURE_qtpdf_build:BOOL=ON \
 	-DFEATURE_qtpdf_quick_build:BOOL=ON \
 	-DFEATURE_qtpdf_widgets_build:BOOL=ON \
+	-DFEATURE_pdf_v8:BOOL=ON \
+	-DFEATURE_pdf_xfa:BOOL=ON \
+	-DFEATURE_pdf_xfa_bmp:BOOL=ON \
+	-DFEATURE_pdf_xfa_gif:BOOL=ON \
+	-DFEATURE_pdf_xfa_png:BOOL=ON \
+	-DFEATURE_pdf_xfa_tiff:BOOL=ON \
 	-DFEATURE_webengine_proprietary_codecs:BOOL=ON \
 	-DFEATURE_webengine_system_ffmpeg:BOOL=ON \
 	-DFEATURE_webengine_system_icu:BOOL=ON \
@@ -199,14 +191,6 @@ export LD_LIBRARY_PATH="$(pwd)/build/lib:${LD_LIBRARY_PATH}"
 
 %install
 %ninja_install -C build
-# Put stuff where tools will find it
-# We can't do the same for %{_includedir} right now because that would
-# clash with qt5 (both would want to have /usr/include/QtCore and friends)
-mkdir -p %{buildroot}%{_bindir}
-for i in %{buildroot}%{_qtdir}/lib/*.so*; do
-        ln -s qt%{major}/lib/$(basename ${i}) %{buildroot}%{_libdir}/
-done
-mv %{buildroot}%{_qtdir}/lib/cmake %{buildroot}%{_libdir}
 
 for i in %{buildroot}%{_qtdir}/translations/qtwebengine_locales/*.pak; do
 	l=$(basename $i .pak |sed -e 's,-,_,g')
@@ -214,15 +198,6 @@ for i in %{buildroot}%{_qtdir}/translations/qtwebengine_locales/*.pak; do
 done
 
 %files -f qtwebengine.lang
-%{_qtdir}/libexec/QtWebEngineProcess
-%{_qtdir}/libexec/gn
-%{_qtdir}/libexec/qwebengine_convert_dict
-%{_qtdir}/plugins/designer/libqwebengineview.so
-%{_qtdir}/qml/QtWebEngine
-%{_qtdir}/resources/qtwebengine_devtools_resources.pak
-%{_qtdir}/resources/qtwebengine_resources.pak
-%{_qtdir}/resources/qtwebengine_resources_100p.pak
-%{_qtdir}/resources/qtwebengine_resources_200p.pak
 
 %package examples
 Summary:	Sample code demonstrating the use of %{name}
