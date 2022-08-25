@@ -37,6 +37,8 @@ BuildRequires:	cmake(Qt%{major}QuickTest)
 BuildRequires:	cmake(Qt%{major}Designer)
 BuildRequires:	cmake(Qt%{major}UiPlugin)
 BuildRequires:	cmake(Qt%{major}Svg)
+BuildRequires:	cmake(Qt%{major}Qml)
+BuildRequires:	cmake(Qt%{major}Quick)
 BuildRequires:	qt%{major}-cmake
 BuildRequires:	qt%{major}-qtdeclarative
 BuildRequires:	pkgconfig(gl)
