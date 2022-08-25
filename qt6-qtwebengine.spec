@@ -48,6 +48,7 @@ BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(xkbcommon)
 BuildRequires:	pkgconfig(vulkan)
 BuildRequires:	pkgconfig(openssl)
+BuildRequires:	pkgconfig(gbm)
 BuildRequires:	gn
 BuildRequires:	gperf
 BuildRequires:	bison
