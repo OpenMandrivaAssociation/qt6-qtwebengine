@@ -50,6 +50,7 @@ BuildRequires:	pkgconfig(vulkan)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(gbm)
 BuildRequires:	pkgconfig(epoxy)
+BuildRequires:	git-core
 BuildRequires:	gn
 BuildRequires:	gperf
 BuildRequires:	bison
