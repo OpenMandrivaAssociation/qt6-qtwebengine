@@ -146,6 +146,9 @@ Qt Designer integration for QtWebEngine
 %{_qtdir}/libexec/gn \
 %{_qtdir}/libexec/qwebengine_convert_dict
 
+%global extra_devel_reqprov_WebEngineCore \
+Requires:	cmake(Qt%{major}Positioning)
+
 %global extra_devel_files_Pdf \
 %{_qtdir}/lib/cmake/Qt6Gui/Qt6QPdfPlugin*.cmake
 
