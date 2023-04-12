@@ -1,0 +1,258 @@
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/base/debug/profiler.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/base/debug/profiler.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/base/debug/profiler.h.omv~	2023-04-12 03:43:51.417525136 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/base/debug/profiler.h	2023-04-12 03:43:58.215589966 +0200
+@@ -7,6 +7,7 @@
+ 
+ #include <stddef.h>
+ 
++#include <cstdint>
+ #include <string>
+ 
+ #include "base/base_export.h"
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/cc/trees/target_property.cc.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/cc/trees/target_property.cc
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/cc/trees/target_property.cc.omv~	2023-04-12 03:56:31.944258121 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/cc/trees/target_property.cc	2023-04-12 03:56:35.038284982 +0200
+@@ -6,6 +6,8 @@
+ 
+ #include "ui/gfx/animation/keyframe/target_property.h"
+ 
++#include <cstdint>
++
+ namespace cc {
+ 
+ static_assert(TargetProperty::LAST_TARGET_PROPERTY <
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/components/viz/common/shared_element_resource_id.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/components/viz/common/shared_element_resource_id.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/components/viz/common/shared_element_resource_id.h.omv~	2023-04-12 03:58:05.082071312 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/components/viz/common/shared_element_resource_id.h	2023-04-12 03:58:13.201142626 +0200
+@@ -5,6 +5,7 @@
+ #ifndef COMPONENTS_VIZ_COMMON_SHARED_ELEMENT_RESOURCE_ID_H_
+ #define COMPONENTS_VIZ_COMMON_SHARED_ELEMENT_RESOURCE_ID_H_
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/content/public/browser/browsing_data_remover_delegate.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/content/public/browser/browsing_data_remover_delegate.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/content/public/browser/browsing_data_remover_delegate.h.omv~	2023-04-12 04:48:38.404724918 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/content/public/browser/browsing_data_remover_delegate.h	2023-04-12 04:48:41.466747506 +0200
+@@ -5,6 +5,7 @@
+ #ifndef CONTENT_PUBLIC_BROWSER_BROWSING_DATA_REMOVER_DELEGATE_H_
+ #define CONTENT_PUBLIC_BROWSER_BROWSING_DATA_REMOVER_DELEGATE_H_
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ #include "base/callback_forward.h"
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/device/base/synchronization/one_writer_seqlock.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/device/base/synchronization/one_writer_seqlock.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/device/base/synchronization/one_writer_seqlock.h.omv~	2023-04-12 03:45:39.994560665 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/device/base/synchronization/one_writer_seqlock.h	2023-04-12 03:45:46.377621547 +0200
+@@ -6,6 +6,7 @@
+ #define DEVICE_BASE_SYNCHRONIZATION_ONE_WRITER_SEQLOCK_H_
+ 
+ #include <atomic>
++#include <cstdint>
+ #include <type_traits>
+ 
+ #include "base/atomicops.h"
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/device/bluetooth/public/cpp/bluetooth_uuid.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/device/bluetooth/public/cpp/bluetooth_uuid.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/device/bluetooth/public/cpp/bluetooth_uuid.h.omv~	2023-04-12 03:44:52.706109645 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/device/bluetooth/public/cpp/bluetooth_uuid.h	2023-04-12 03:44:58.400163951 +0200
+@@ -5,6 +5,7 @@
+ #ifndef DEVICE_BLUETOOTH_PUBLIC_CPP_BLUETOOTH_UUID_H_
+ #define DEVICE_BLUETOOTH_PUBLIC_CPP_BLUETOOTH_UUID_H_
+ 
++#include <cstdint>
+ #include <ostream>
+ #include <string>
+ #include <vector>
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/extensions/common/constants.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/extensions/common/constants.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/extensions/common/constants.h.omv~	2023-04-12 03:59:16.126697418 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/extensions/common/constants.h	2023-04-12 03:59:18.655719788 +0200
+@@ -5,6 +5,7 @@
+ #ifndef EXTENSIONS_COMMON_CONSTANTS_H_
+ #define EXTENSIONS_COMMON_CONSTANTS_H_
+ 
++#include <cstdint>
+ #include "base/files/file_path.h"
+ #include "base/strings/string_piece_forward.h"
+ #include "build/chromeos_buildflags.h"
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/gpu/config/gpu_feature_info.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/gpu/config/gpu_feature_info.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/gpu/config/gpu_feature_info.h.omv~	2023-04-12 04:00:08.630162927 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/gpu/config/gpu_feature_info.h	2023-04-12 04:00:12.291195468 +0200
+@@ -5,6 +5,7 @@
+ #ifndef GPU_CONFIG_GPU_FEATURE_INFO_H_
+ #define GPU_CONFIG_GPU_FEATURE_INFO_H_
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/base/parse_number.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/base/parse_number.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/base/parse_number.h.omv~	2023-04-12 04:03:12.087804879 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/base/parse_number.h	2023-04-12 04:03:26.778937243 +0200
+@@ -5,6 +5,7 @@
+ #ifndef NET_BASE_PARSE_NUMBER_H_
+ #define NET_BASE_PARSE_NUMBER_H_
+ 
++#include <cstdint>
+ #include "base/strings/string_piece.h"
+ #include "net/base/net_export.h"
+ 
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/cookies/cookie_inclusion_status.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/cookies/cookie_inclusion_status.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/cookies/cookie_inclusion_status.h.omv~	2023-04-12 04:03:46.590115915 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/cookies/cookie_inclusion_status.h	2023-04-12 04:03:49.001137673 +0200
+@@ -6,6 +6,7 @@
+ #define NET_COOKIES_COOKIE_INCLUSION_STATUS_H_
+ 
+ #include <bitset>
++#include <cstdint>
+ #include <ostream>
+ #include <string>
+ #include <vector>
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/third_party/quiche/src/quiche/quic/core/crypto/quic_hkdf.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/third_party/quiche/src/quiche/quic/core/crypto/quic_hkdf.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/third_party/quiche/src/quiche/quic/core/crypto/quic_hkdf.h.omv~	2023-04-12 03:51:02.887481896 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/third_party/quiche/src/quiche/quic/core/crypto/quic_hkdf.h	2023-04-12 03:51:05.508503229 +0200
+@@ -5,6 +5,7 @@
+ #ifndef QUICHE_QUIC_CORE_CRYPTO_QUIC_HKDF_H_
+ #define QUICHE_QUIC_CORE_CRYPTO_QUIC_HKDF_H_
+ 
++#include <cstdint>
+ #include <vector>
+ 
+ #include "absl/strings/string_view.h"
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/third_party/quiche/src/quiche/quic/core/quic_connection_id.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/third_party/quiche/src/quiche/quic/core/quic_connection_id.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/third_party/quiche/src/quiche/quic/core/quic_connection_id.h.omv~	2023-04-12 03:49:55.111935811 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/net/third_party/quiche/src/quiche/quic/core/quic_connection_id.h	2023-04-12 03:49:57.746956833 +0200
+@@ -5,6 +5,7 @@
+ #ifndef QUICHE_QUIC_CORE_QUIC_CONNECTION_ID_H_
+ #define QUICHE_QUIC_CORE_QUIC_CONNECTION_ID_H_
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/pdf/document_attachment_info.h$.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/pdf/document_attachment_info.h$
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/pdf/document_attachment_info.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/pdf/document_attachment_info.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/pdf/document_attachment_info.h.omv~	2023-04-12 04:25:22.957754929 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/pdf/document_attachment_info.h	2023-04-12 04:25:25.808753148 +0200
+@@ -5,6 +5,7 @@
+ #ifndef PDF_DOCUMENT_ATTACHMENT_INFO_H_
+ #define PDF_DOCUMENT_ATTACHMENT_INFO_H_
+ 
++#include <cstdint>
+ #include <string>
+ 
+ 
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/sandbox/linux/syscall_broker/broker_file_permission.cc.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/sandbox/linux/syscall_broker/broker_file_permission.cc
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/sandbox/linux/syscall_broker/broker_file_permission.cc.omv~	2023-04-12 03:46:20.870950550 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/sandbox/linux/syscall_broker/broker_file_permission.cc	2023-04-12 03:46:30.046038065 +0200
+@@ -9,6 +9,7 @@
+ #include <string.h>
+ #include <unistd.h>
+ 
++#include <cstdint>
+ #include <ostream>
+ #include <string>
+ 
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/sandbox/linux/syscall_broker/broker_file_permission.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/sandbox/linux/syscall_broker/broker_file_permission.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/sandbox/linux/syscall_broker/broker_file_permission.h.omv~	2023-04-12 03:46:57.777302582 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/sandbox/linux/syscall_broker/broker_file_permission.h	2023-04-12 03:47:01.008333402 +0200
+@@ -6,6 +6,7 @@
+ #define SANDBOX_LINUX_SYSCALL_BROKER_BROKER_FILE_PERMISSION_H_
+ 
+ #include <bitset>
++#include <cstdint>
+ #include <string>
+ 
+ #include "sandbox/sandbox_export.h"
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderVars.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderVars.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderVars.h.omv~	2023-04-12 03:26:16.234479197 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderVars.h	2023-04-12 03:26:23.212545417 +0200
+@@ -12,6 +12,7 @@
+ 
+ #include <algorithm>
+ #include <array>
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/blink/public/common/origin_trials/origin_trial_public_key.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/blink/public/common/origin_trials/origin_trial_public_key.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/blink/public/common/origin_trials/origin_trial_public_key.h.omv~	2023-04-12 04:13:00.484169564 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/blink/public/common/origin_trials/origin_trial_public_key.h	2023-04-12 04:13:03.062193267 +0200
+@@ -6,6 +6,7 @@
+ #define THIRD_PARTY_BLINK_PUBLIC_COMMON_ORIGIN_TRIALS_ORIGIN_TRIAL_PUBLIC_KEY_H_
+ 
+ #include <array>
++#include <cstdint>
+ 
+ namespace blink {
+ 
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/pdfium/constants/annotation_flags.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/pdfium/constants/annotation_flags.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/pdfium/constants/annotation_flags.h.omv~	2023-04-12 04:45:19.595283459 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/pdfium/constants/annotation_flags.h	2023-04-12 04:45:22.665305291 +0200
+@@ -5,6 +5,8 @@
+ #ifndef CONSTANTS_ANNOTATION_FLAGS_H_
+ #define CONSTANTS_ANNOTATION_FLAGS_H_
+ 
++#include <cstdint>
++
+ namespace pdfium {
+ namespace annotation_flags {
+ 
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h.omv~	2023-04-12 03:37:50.593085221 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h	2023-04-12 03:37:57.071146954 +0200
+@@ -18,6 +18,7 @@
+ #define INCLUDE_PERFETTO_EXT_BASE_UUID_H_
+ 
+ #include <array>
++#include <cstdint>
+ #include <string>
+ 
+ #include "perfetto/ext/base/optional.h"
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/vulkan_memory_allocator/include/vk_mem_alloc.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/vulkan_memory_allocator/include/vk_mem_alloc.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/vulkan_memory_allocator/include/vk_mem_alloc.h.omv~	2023-04-12 03:27:20.578089988 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/vulkan_memory_allocator/include/vk_mem_alloc.h	2023-04-12 03:27:53.545403087 +0200
+@@ -105,6 +105,8 @@ Documentation of all members: vk_mem_all
+ - [Source repository on GitHub](https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator)
+ */
+ 
++#include <cstdio>
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.h.omv~	2023-04-12 03:53:37.516764286 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.h	2023-04-12 03:53:47.831851382 +0200
+@@ -12,6 +12,7 @@
+ #ifndef RTC_BASE_THIRD_PARTY_BASE64_BASE64_H_
+ #define RTC_BASE_THIRD_PARTY_BASE64_BASE64_H_
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/ui/events/types/scroll_types.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/ui/events/types/scroll_types.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/ui/events/types/scroll_types.h.omv~	2023-04-12 03:54:24.031158375 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/ui/events/types/scroll_types.h	2023-04-12 03:54:27.601188761 +0200
+@@ -5,6 +5,8 @@
+ #ifndef UI_EVENTS_TYPES_SCROLL_TYPES_H_
+ #define UI_EVENTS_TYPES_SCROLL_TYPES_H_
+ 
++#include <cstdint>
++
+ namespace ui {
+ 
+ enum class ScrollGranularity : uint8_t {
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/ui/gfx/geometry/linear_gradient.h.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/ui/gfx/geometry/linear_gradient.h
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/ui/gfx/geometry/linear_gradient.h.omv~	2023-04-12 03:54:44.606333757 +0200
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/ui/gfx/geometry/linear_gradient.h	2023-04-12 03:54:46.924353554 +0200
+@@ -6,6 +6,7 @@
+ #define UI_GFX_LINEAR_GRADIENT_H_
+ 
+ #include <array>
++#include <cstdint>
+ #include <string>
+ 
+ #include "ui/gfx/geometry/geometry_skia_export.h"
