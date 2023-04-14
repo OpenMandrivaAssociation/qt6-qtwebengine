@@ -16,6 +16,7 @@ Source:		http://download.qt-project.org/%{?beta:development}%{!?beta:official}_r
 Patch1:		qtwebengine-6.4.0b3-buildfixes.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
 Patch3:		qtwebengine-6.5.0-libstdc++13.patch
+Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
 Group:		System/Libraries
 Summary:	Qt %{major} Web Engine - a web browser library for Qt
 BuildRequires:	cmake

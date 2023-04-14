@@ -1,0 +1,12 @@
+diff -up qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/crc32c/src/src/crc32c_arm64.cc.omv~ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/crc32c/src/src/crc32c_arm64.cc
+--- qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/crc32c/src/src/crc32c_arm64.cc.omv~	2023-04-14 16:39:09.822048418 +0100
++++ qtwebengine-everywhere-src-6.5.0/src/3rdparty/chromium/third_party/crc32c/src/src/crc32c_arm64.cc	2023-04-14 17:08:14.643217487 +0100
+@@ -62,7 +62,7 @@
+ 
+ namespace crc32c {
+ 
+-uint32_t ExtendArm64(uint32_t crc, const uint8_t *data, size_t size) {
++__attribute__((target("arch=armv8-a+crc+crypto+aes"))) uint32_t ExtendArm64(uint32_t crc, const uint8_t *data, size_t size) {
+   int64_t length = size;
+   uint32_t crc0, crc1, crc2, crc3;
+   uint64_t t0, t1, t2;
