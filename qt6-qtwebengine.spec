@@ -6,7 +6,7 @@
 
 Name:		qt6-qtwebengine
 Version:	6.5.0
-Release:	%{?beta:0.%{beta}.1}%{?snapshot:0.%{snapshot}.}2
+Release:	%{?beta:0.%{beta}.1}%{?snapshot:0.%{snapshot}.}3
 %if 0%{?snapshot:1}
 # "git archive"-d from "dev" branch of git://code.qt.io/qt/qtbase.git
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
@@ -209,6 +209,7 @@ for i in %{buildroot}%{_qtdir}/translations/qtwebengine_locales/*.pak; do
 	l=$(basename $i .pak |sed -e 's,-,_,g')
 	echo "%lang($l) %{_qtdir}/translations/qtwebengine_locales/$(basename $i)" >>qtwebengine.lang
 done
+%qt6_postinstall
 
 %files -f qtwebengine.lang
 
