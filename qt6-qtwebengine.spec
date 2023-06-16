@@ -1,11 +1,11 @@
-#define beta rc
+%define beta beta1
 #define snapshot 20200627
 %define major 6
 
 %define _qtdir %{_libdir}/qt%{major}
 
 Name:		qt6-qtwebengine
-Version:	6.5.1
+Version:	6.6.0
 Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # "git archive"-d from "dev" branch of git://code.qt.io/qt/qtbase.git
@@ -133,7 +133,8 @@ Qt Designer integration for QtWebEngine
 %{_qtdir}/resources/qtwebengine_devtools_resources.pak \
 %{_qtdir}/resources/qtwebengine_resources.pak \
 %{_qtdir}/resources/qtwebengine_resources_100p.pak \
-%{_qtdir}/resources/qtwebengine_resources_200p.pak
+%{_qtdir}/resources/qtwebengine_resources_200p.pak \
+%{_qtdir}/resources/v8_context_snapshot.bin
 
 %global extra_devel_files_WebEngineCore \
 %{_qtdir}/lib/cmake/Qt6/FindGPerf.cmake \
