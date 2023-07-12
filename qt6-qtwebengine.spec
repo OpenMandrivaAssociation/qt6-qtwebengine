@@ -17,6 +17,11 @@ Patch1:		qtwebengine-6.4.0b3-buildfixes.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
 Patch3:		qtwebengine-6.6.0-beta1-re2-2023.07.10.patch
 Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
+# Try to restore a sufficient amount of binary compatibility between the
+# internalized copy of absl (which can't be disabled yet) and the system
+# version (used, among others, by the system version of re2, which DOES
+# get used...
+Patch5:		qtwebengine-re2-absl-compat.patch
 Group:		System/Libraries
 Summary:	Qt %{major} Web Engine - a web browser library for Qt
 BuildRequires:	cmake
@@ -104,6 +109,7 @@ BuildRequires:	pkgconfig(libpipewire-0.3)
 BuildRequires:	pkgconfig(xscrnsaver)
 BuildRequires:	pkgconfig(xdamage)
 BuildRequires:	pkgconfig(xkbfile)
+BuildRequires:	pkgconfig(absl_config)
 BuildRequires:	cmake(LLVM)
 BuildRequires:	cmake(Clang)
 BuildRequires:	python3dist(html5lib)
@@ -177,8 +183,11 @@ Requires:	cmake(Qt%{major}Positioning)
 %prep
 %autosetup -p1 -n qtwebengine%{!?snapshot:-everywhere-src-%{version}%{?beta:-%{beta}}}
 
-# Python 3.11 support for upstream bits
-find src/3rdparty -name "*.py" |xargs sed -i -e "s,'rU','r',g"
+# Until we can figure out how to kill the internal absl, let's at least
+# try to make it ABI compatible with the system copy (as used by re2...)
+cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/abseil-cpp/absl/base/options.h
+# Chromium isn't compatible with std::optional though
+sed -i -e 's,#define ABSL_OPTION_USE_STD_OPTIONAL 1,#define ABSL_OPTION_USE_STD_OPTIONAL 0,' src/3rdparty/chromium/third_party/abseil-cpp/absl/base/options.h
 
 %cmake -G Ninja \
 	-DCMAKE_INSTALL_PREFIX=%{_qtdir} \
