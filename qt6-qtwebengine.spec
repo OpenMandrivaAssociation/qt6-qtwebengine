@@ -1,4 +1,4 @@
-%define beta beta2
+%define beta beta3
 #define snapshot 20200627
 %define major 6
 
@@ -21,7 +21,7 @@ Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
 # internalized copy of absl (which can't be disabled yet) and the system
 # version (used, among others, by the system version of re2, which DOES
 # get used...
-Patch5:		qtwebengine-re2-absl-compat.patch
+#Patch5:		qtwebengine-re2-absl-compat.patch
 Group:		System/Libraries
 Summary:	Qt %{major} Web Engine - a web browser library for Qt
 BuildRequires:	cmake
