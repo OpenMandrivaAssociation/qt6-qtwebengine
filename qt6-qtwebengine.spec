@@ -58,6 +58,7 @@ BuildRequires:	pkgconfig(vulkan)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(gbm)
 BuildRequires:	pkgconfig(epoxy)
+BuildRequires:	pkgconfig(dri)
 BuildRequires:	git-core
 BuildRequires:	gn
 BuildRequires:	gperf
