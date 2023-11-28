@@ -124,7 +124,6 @@ License:	LGPLv3/GPLv3/GPLv2
 %description
 Qt %{major} Web Engine - a web browser library for Qt
 
-%if 0
 %package designer
 Summary: Qt Designer integration for QtWebEngine
 Group: Development/C
@@ -137,7 +136,6 @@ Qt Designer integration for QtWebEngine
 %files designer
 %{_qtdir}/plugins/designer/libqwebengineview.so
 %{_qtdir}/lib/cmake/Qt6Designer/Qt6QWebEngineViewPlugin*.cmake
-%endif
 
 %global extra_files_WebEngineCore \
 %{_qtdir}/libexec/QtWebEngineProcess \
