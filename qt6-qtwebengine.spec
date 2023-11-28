@@ -5,7 +5,7 @@
 %define _qtdir %{_libdir}/qt%{major}
 
 Name:		qt6-qtwebengine
-Version:	6.6.0
+Version:	6.6.1
 Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # "git archive"-d from "dev" branch of git://code.qt.io/qt/qtbase.git
@@ -15,7 +15,6 @@ Source:		http://download.qt-project.org/%{?beta:development}%{!?beta:official}_r
 %endif
 Patch1:		qtwebengine-6.4.0b3-buildfixes.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
-Patch3:		qtwebengine-6.6.0-beta1-re2-2023.07.10.patch
 Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
 # Try to restore a sufficient amount of binary compatibility between the
 # internalized copy of absl (which can't be disabled yet) and the system
@@ -125,6 +124,7 @@ License:	LGPLv3/GPLv3/GPLv2
 %description
 Qt %{major} Web Engine - a web browser library for Qt
 
+%if 0
 %package designer
 Summary: Qt Designer integration for QtWebEngine
 Group: Development/C
@@ -136,6 +136,8 @@ Qt Designer integration for QtWebEngine
 
 %files designer
 %{_qtdir}/plugins/designer/libqwebengineview.so
+%{_qtdir}/lib/cmake/Qt6Designer/Qt6QWebEngineViewPlugin*.cmake
+%endif
 
 %global extra_files_WebEngineCore \
 %{_qtdir}/libexec/QtWebEngineProcess \
@@ -153,7 +155,6 @@ Qt Designer integration for QtWebEngine
 %{_qtdir}/lib/cmake/Qt6/FindPkgConfigHost.cmake \
 %{_qtdir}/lib/cmake/Qt6/FindSnappy.cmake \
 %{_qtdir}/lib/cmake/Qt6BuildInternals/StandaloneTests/QtWebEngineTestsConfig.cmake \
-%{_qtdir}/lib/cmake/Qt6Designer/Qt6QWebEngineViewPlugin*.cmake \
 %{_qtdir}/libexec/gn \
 %{_qtdir}/libexec/qwebengine_convert_dict
 
