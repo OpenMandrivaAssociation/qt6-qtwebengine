@@ -6,7 +6,7 @@
 
 Name:		qt6-qtwebengine
 Version:	6.6.1
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}2
 %if 0%{?snapshot:1}
 # "git archive"-d from "dev" branch of git://code.qt.io/qt/qtbase.git
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
@@ -158,6 +158,9 @@ Qt Designer integration for QtWebEngine
 
 %global extra_devel_reqprov_WebEngineCore \
 Requires:	cmake(Qt%{major}Positioning)
+
+%global extra_devel_reqprov_WebEngineWidgets \
+Requires:	cmake(Qt%{major}QuickWidgets)
 
 %global extra_devel_files_Pdf \
 %{_qtdir}/lib/cmake/Qt6Gui/Qt6QPdfPlugin*.cmake
