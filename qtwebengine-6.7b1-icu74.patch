@@ -1,0 +1,14 @@
+diff -up qtwebengine-everywhere-src-6.7.0-beta1/src/3rdparty/chromium/third_party/blink/renderer/platform/text/text_break_iterator.cc.omv~ qtwebengine-everywhere-src-6.7.0-beta1/src/3rdparty/chromium/third_party/blink/renderer/platform/text/text_break_iterator.cc
+--- qtwebengine-everywhere-src-6.7.0-beta1/src/3rdparty/chromium/third_party/blink/renderer/platform/text/text_break_iterator.cc.omv~	2023-12-21 11:14:36.214771671 +0100
++++ qtwebengine-everywhere-src-6.7.0-beta1/src/3rdparty/chromium/third_party/blink/renderer/platform/text/text_break_iterator.cc	2023-12-21 11:30:33.108344043 +0100
+@@ -161,7 +161,9 @@ static const unsigned char kAsciiLineBre
+ };
+ // clang-format on
+ 
+-#if U_ICU_VERSION_MAJOR_NUM >= 58
++#if U_ICU_VERSION_MAJOR_NUM >= 74
++#define BA_LB_COUNT (U_LB_COUNT - 8)
++#elif U_ICU_VERSION_MAJOR_NUM >= 58
+ #define BA_LB_COUNT (U_LB_COUNT - 3)
+ #else
+ #define BA_LB_COUNT U_LB_COUNT
