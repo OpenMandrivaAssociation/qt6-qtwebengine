@@ -61,6 +61,7 @@ BuildRequires:	pkgconfig(gbm)
 BuildRequires:	pkgconfig(epoxy)
 BuildRequires:	pkgconfig(dri)
 BuildRequires:	git-core
+BuildRequires:	atomic-devel
 BuildRequires:	gn
 BuildRequires:	gperf
 BuildRequires:	bison
