@@ -1,6 +1,9 @@
-%define beta beta1
+%define beta beta2
 #define snapshot 20200627
 %define major 6
+
+# Until we can return to building with clang
+%define _disable_lto 1
 
 %define _qtdir %{_libdir}/qt%{major}
 
@@ -15,9 +18,7 @@ Source:		http://download.qt-project.org/%{?beta:development}%{!?beta:official}_r
 %endif
 Patch1:		qtwebengine-6.4.0b3-buildfixes.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
-Patch3:		qtwebengine-6.7b1-libxml.patch
 Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
-Patch5:		qtwebengine-6.7b1-icu74.patch
 # Try to restore a sufficient amount of binary compatibility between the
 # internalized copy of absl (which can't be disabled yet) and the system
 # version (used, among others, by the system version of re2, which DOES
@@ -184,6 +185,9 @@ Requires:	cmake(Qt%{major}QuickWidgets)
 %global extra_files_PdfQuick \
 %{_qtdir}/qml/QtQuick/Pdf
 
+%global extra_files_WebEngineCore \
+%{_qtdir}/libexec/webenginedriver
+
 %qt6libs WebEngineCore WebEngineQuick WebEngineWidgets WebEngineQuickDelegatesQml Pdf PdfQuick PdfWidgets
 
 %prep
@@ -194,6 +198,10 @@ Requires:	cmake(Qt%{major}QuickWidgets)
 cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/abseil-cpp/absl/base/options.h
 # Chromium isn't compatible with std::optional though
 sed -i -e 's,#define ABSL_OPTION_USE_STD_OPTIONAL 1,#define ABSL_OPTION_USE_STD_OPTIONAL 0,' src/3rdparty/chromium/third_party/abseil-cpp/absl/base/options.h
+
+# FIXME https://github.com/llvm/llvm-project/issues/80210
+export CC=gcc
+export CXX=g++
 
 %cmake -G Ninja \
 	-DCMAKE_INSTALL_PREFIX=%{_qtdir} \
