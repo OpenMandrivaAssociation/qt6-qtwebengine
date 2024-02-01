@@ -142,12 +142,15 @@ Qt Designer integration for QtWebEngine
 %{_qtdir}/lib/cmake/Qt6Designer/Qt6QWebEngineViewPlugin*.cmake
 
 %global extra_files_WebEngineCore \
+%{_qtdir}/libexec/webenginedriver \
 %{_qtdir}/libexec/QtWebEngineProcess \
+%dir %{_qtdir}/resources \
 %{_qtdir}/resources/qtwebengine_devtools_resources.pak \
 %{_qtdir}/resources/qtwebengine_resources.pak \
 %{_qtdir}/resources/qtwebengine_resources_100p.pak \
 %{_qtdir}/resources/qtwebengine_resources_200p.pak \
 %{_qtdir}/resources/v8_context_snapshot.bin
+
 
 %global extra_devel_files_WebEngineCore \
 %{_qtdir}/lib/cmake/Qt6/FindGPerf.cmake \
@@ -184,9 +187,6 @@ Requires:	cmake(Qt%{major}QuickWidgets)
 
 %global extra_files_PdfQuick \
 %{_qtdir}/qml/QtQuick/Pdf
-
-%global extra_files_WebEngineCore \
-%{_qtdir}/libexec/webenginedriver
 
 %qt6libs WebEngineCore WebEngineQuick WebEngineWidgets WebEngineQuickDelegatesQml Pdf PdfQuick PdfWidgets
 
