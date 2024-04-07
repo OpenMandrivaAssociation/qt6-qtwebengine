@@ -1,4 +1,4 @@
-%define beta rc2
+#define beta rc2
 #define snapshot 20200627
 %define major 6
 
@@ -7,9 +7,13 @@
 
 %define _qtdir %{_libdir}/qt%{major}
 
+# Use this if you get "filename too long" errors:
+# Workaround for filenames getting too long for ****ing gn to handle
+#define _builddir /tmp/b
+
 Name:		qt6-qtwebengine
 Version:	6.7.0
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}2
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # "git archive"-d from "dev" branch of git://code.qt.io/qt/qtbase.git
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
@@ -18,12 +22,18 @@ Source:		http://download.qt-project.org/%{?beta:development}%{!?beta:official}_r
 %endif
 Patch1:		qtwebengine-6.4.0b3-buildfixes.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
+Patch3:		qt-webengine-6.7.0-ffmpeg-7.0.patch
 Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
+Patch5:		qtwebengine-6.7.0-clang-18.patch 
 # Try to restore a sufficient amount of binary compatibility between the
 # internalized copy of absl (which can't be disabled yet) and the system
 # version (used, among others, by the system version of re2, which DOES
 # get used...
 #Patch5:		qtwebengine-re2-absl-compat.patch
+# Backports from chromium to enable ffmpeg 7.0 support
+Patch1000:	chromium-media-c6091a9dd2.patch
+Patch1001:	chromium-media-ce20fa742f2525e0d7bf36373557615de05a6104.patch
+Patch1002:	media-e522b8156f88771fd9d930f88de12600fb479afe.patch
 Group:		System/Libraries
 Summary:	Qt %{major} Web Engine - a web browser library for Qt
 BuildRequires:	cmake
@@ -191,17 +201,17 @@ Requires:	cmake(Qt%{major}QuickWidgets)
 %qt6libs WebEngineCore WebEngineQuick WebEngineWidgets WebEngineQuickDelegatesQml Pdf PdfQuick PdfWidgets
 
 %prep
-%autosetup -p1 -n qtwebengine%{!?snapshot:-everywhere-src-%{version}%{?beta:-%{beta}}}
+%setup -q -n qtwebengine%{!?snapshot:-everywhere-src-%{version}%{?beta:-%{beta}}}
+%autopatch -p1 -M 999
+cd src/3rdparty/chromium/media
+%autopatch -p1 -m 1000 -M 1010
+cd -
 
 # Until we can figure out how to kill the internal absl, let's at least
 # try to make it ABI compatible with the system copy (as used by re2...)
 cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/abseil-cpp/absl/base/options.h
 # Chromium isn't compatible with std::optional though
 sed -i -e 's,#define ABSL_OPTION_USE_STD_OPTIONAL 1,#define ABSL_OPTION_USE_STD_OPTIONAL 0,' src/3rdparty/chromium/third_party/abseil-cpp/absl/base/options.h
-
-# FIXME https://github.com/llvm/llvm-project/issues/80210
-export CC=gcc
-export CXX=g++
 
 %cmake -G Ninja \
 	-DCMAKE_INSTALL_PREFIX=%{_qtdir} \
