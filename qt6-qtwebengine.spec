@@ -13,10 +13,12 @@
 
 Name:		qt6-qtwebengine
 Version:	6.7.0
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}2
 %if 0%{?snapshot:1}
-# "git archive"-d from "dev" branch of git://code.qt.io/qt/qtbase.git
+# Built with package-source.sh (Source1000)
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
+Source1:	qtwebengine-chromium-122-%{snapshot}.tar.zst
+Source1000:	package-source.sh
 %else
 Source:		http://download.qt-project.org/%{?beta:development}%{!?beta:official}_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}%{?beta:-%{beta}}/submodules/qtwebengine-everywhere-src-%{version}%{?beta:-%{beta}}.tar.xz
 %endif
@@ -25,6 +27,7 @@ Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
 Patch3:		qt-webengine-6.7.0-ffmpeg-7.0.patch
 Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
 Patch5:		qtwebengine-6.7.0-clang-18.patch 
+Patch6:		qtwebengine-6.7.0-compile.patch
 # Try to restore a sufficient amount of binary compatibility between the
 # internalized copy of absl (which can't be disabled yet) and the system
 # version (used, among others, by the system version of re2, which DOES
@@ -34,6 +37,10 @@ Patch5:		qtwebengine-6.7.0-clang-18.patch
 Patch1000:	chromium-media-c6091a9dd2.patch
 Patch1001:	chromium-media-ce20fa742f2525e0d7bf36373557615de05a6104.patch
 Patch1002:	media-e522b8156f88771fd9d930f88de12600fb479afe.patch
+# Patches 2000 to 3000 are applied to the builtin Chromium sources and
+# should be kept in sync with the chromium package where applicable.
+Patch2000:	https://sources.debian.org/data/main/c/chromium/124.0.6367.155-1/debian/patches/fixes/widevine-revision.patch
+Patch2001:	https://sources.debian.org/data/main/c/chromium/124.0.6367.155-1/debian/patches/fixes/widevine-locations.patch
 Group:		System/Libraries
 Summary:	Qt %{major} Web Engine - a web browser library for Qt
 BuildRequires:	cmake
@@ -66,6 +73,7 @@ BuildRequires:	qt%{major}-cmake
 BuildRequires:	qt%{major}-qtdeclarative
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(xkbcommon)
+BuildRequires:	pkgconfig(libva)
 BuildRequires:	pkgconfig(vulkan)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(gbm)
@@ -83,6 +91,7 @@ BuildRequires:	pkgconfig(cups)
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(libdrm)
+BuildRequires:	pkgconfig(libjxl)
 BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(xcursor)
 BuildRequires:	pkgconfig(xi)
@@ -99,6 +108,8 @@ BuildRequires:	pkgconfig(libjpeg)
 BuildRequires:	pkgconfig(libevent)
 BuildRequires:	pkgconfig(minizip)
 BuildRequires:	pkgconfig(libpng) >= 1.6.0
+BuildRequires:	pkgconfig(libtiff-4)
+BuildRequires:	pkgconfig(libopenjp2)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(re2)
 BuildRequires:	pkgconfig(icu-uc)
@@ -202,16 +213,30 @@ Requires:	cmake(Qt%{major}QuickWidgets)
 
 %prep
 %setup -q -n qtwebengine%{!?snapshot:-everywhere-src-%{version}%{?beta:-%{beta}}}
+%if 0%{?snapshot:1}
+cd src/3rdparty
+tar xf %{S:1}
+cd ../..
+%endif
 %autopatch -p1 -M 999
 cd src/3rdparty/chromium/media
 %autopatch -p1 -m 1000 -M 1010
+cd -
+cd src/3rdparty/chromium
+%autopatch -p1 -m 2000 -M 3000
 cd -
 
 # Until we can figure out how to kill the internal absl, let's at least
 # try to make it ABI compatible with the system copy (as used by re2...)
 cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/abseil-cpp/absl/base/options.h
 # Chromium isn't compatible with std::optional though
-sed -i -e 's,#define ABSL_OPTION_USE_STD_OPTIONAL 1,#define ABSL_OPTION_USE_STD_OPTIONAL 0,' src/3rdparty/chromium/third_party/abseil-cpp/absl/base/options.h
+#sed -i -e 's,#define ABSL_OPTION_USE_STD_OPTIONAL 1,#define ABSL_OPTION_USE_STD_OPTIONAL 0,' src/3rdparty/chromium/third_party/abseil-cpp/absl/base/options.h
+
+# FIXME We probably want
+# -DFEATURE_webengine_system_libvpx:BOOL=ON
+# but cmake claims it's incompatible with VAAPI
+# Need to check if that's true and if necessary port
+# related patches to system libvpx
 
 %cmake -G Ninja \
 	-DCMAKE_INSTALL_PREFIX=%{_qtdir} \
@@ -231,7 +256,9 @@ sed -i -e 's,#define ABSL_OPTION_USE_STD_OPTIONAL 1,#define ABSL_OPTION_USE_STD_
 	-DFEATURE_webengine_system_icu:BOOL=ON \
 	-DFEATURE_webengine_system_libevent:BOOL=ON \
 	-DFEATURE_webengine_system_ninja:BOOL=ON \
-	-DFEATURE_webengine_webrtc_pipewire:BOOL=ON
+	-DFEATURE_webengine_webrtc_pipewire:BOOL=ON \
+	-DFEATURE_webengine_vaapi:BOOL=ON \
+	-DFEATURE_webengine_vulkan:BOOL=ON
 
 %build
 export LD_LIBRARY_PATH="$(pwd)/build/lib:${LD_LIBRARY_PATH}"
