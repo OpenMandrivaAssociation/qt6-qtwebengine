@@ -12,8 +12,8 @@
 #define _builddir /tmp/b
 
 Name:		qt6-qtwebengine
-Version:	6.7.1
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}2
+Version:	6.7.2
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
