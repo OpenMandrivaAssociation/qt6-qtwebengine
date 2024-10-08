@@ -12,7 +12,7 @@
 #define _builddir /tmp/b
 
 Name:		qt6-qtwebengine
-Version:	6.7.3
+Version:	6.8.0
 Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
@@ -24,18 +24,13 @@ Source:		http://download.qt-project.org/%{?beta:development}%{!?beta:official}_r
 %endif
 Patch1:		qtwebengine-6.4.0b3-buildfixes.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
-Patch3:		qt-webengine-6.7.0-ffmpeg-7.0.patch
 Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
-Patch6:		qtwebengine-6.7.0-compile.patch
+#Patch6:		qtwebengine-6.7.0-compile.patch
 # Try to restore a sufficient amount of binary compatibility between the
 # internalized copy of absl (which can't be disabled yet) and the system
 # version (used, among others, by the system version of re2, which DOES
 # get used...
 #Patch5:		qtwebengine-re2-absl-compat.patch
-# Backports from chromium to enable ffmpeg 7.0 support
-Patch1000:	chromium-media-c6091a9dd2.patch
-Patch1001:	chromium-media-ce20fa742f2525e0d7bf36373557615de05a6104.patch
-Patch1002:	media-e522b8156f88771fd9d930f88de12600fb479afe.patch
 # Patches 2000 to 3000 are applied to the builtin Chromium sources and
 # should be kept in sync with the chromium package where applicable.
 Patch2000:	https://sources.debian.org/data/main/c/chromium/124.0.6367.155-1/debian/patches/fixes/widevine-revision.patch
