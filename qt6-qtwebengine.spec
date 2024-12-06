@@ -12,7 +12,7 @@
 #define _builddir /tmp/b
 
 Name:		qt6-qtwebengine
-Version:	6.8.0
+Version:	6.8.1
 Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
@@ -178,7 +178,8 @@ Qt Designer integration for QtWebEngine
 %{_qtdir}/lib/cmake/Qt6/FindSnappy.cmake \
 %{_qtdir}/lib/cmake/Qt6BuildInternals/StandaloneTests/QtWebEngineTestsConfig.cmake \
 %{_qtdir}/libexec/gn \
-%{_qtdir}/libexec/qwebengine_convert_dict
+%{_qtdir}/libexec/qwebengine_convert_dict \
+%{_qtdir}/sbom/*
 
 %global extra_devel_reqprov_WebEngineCore \
 Requires:	cmake(Qt%{major}Positioning)
