@@ -13,7 +13,7 @@
 
 Name:		qt6-qtwebengine
 Version:	6.8.2
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}3
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}4
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
