@@ -1,7 +1,7 @@
-diff -up qtwebengine-everywhere-src-6.4.0-beta3/src/3rdparty/chromium/build/config/clang/BUILD.gn.omv~ qtwebengine-everywhere-src-6.4.0-beta3/src/3rdparty/chromium/build/config/clang/BUILD.gn
---- qtwebengine-everywhere-src-6.4.0-beta3/src/3rdparty/chromium/build/config/clang/BUILD.gn.omv~	2022-08-25 03:08:48.203870466 +0200
-+++ qtwebengine-everywhere-src-6.4.0-beta3/src/3rdparty/chromium/build/config/clang/BUILD.gn	2022-08-25 03:55:22.978880074 +0200
-@@ -46,6 +46,11 @@ config("extra_warnings") {
+diff -up qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/build/config/clang/BUILD.gn.1~ qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/build/config/clang/BUILD.gn
+--- qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/build/config/clang/BUILD.gn.1~	2025-03-09 20:36:47.000000000 +0100
++++ qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/build/config/clang/BUILD.gn	2025-03-16 16:37:31.316671629 +0100
+@@ -150,6 +150,11 @@ config("extra_warnings") {
      "-Wstring-conversion",
  
      "-Wtautological-overlap-compare",
@@ -13,9 +13,9 @@ diff -up qtwebengine-everywhere-src-6.4.0-beta3/src/3rdparty/chromium/build/conf
    ]
  }
  
-diff -up qtwebengine-everywhere-src-6.4.0-beta3/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc.omv~ qtwebengine-everywhere-src-6.4.0-beta3/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc
---- qtwebengine-everywhere-src-6.4.0-beta3/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc.omv~	2022-08-25 00:28:12.958335863 +0200
-+++ qtwebengine-everywhere-src-6.4.0-beta3/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc	2022-08-25 00:31:35.772634005 +0200
+diff -up qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc.1~ qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc
+--- qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc.1~	2025-03-09 20:36:47.000000000 +0100
++++ qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc	2025-03-16 17:41:02.611160062 +0100
 @@ -177,7 +177,7 @@ void* OpenZipBuffer(void* opaque, const
  
  // Reads compressed data from the specified stream. This function copies data
@@ -35,7 +35,7 @@ diff -up qtwebengine-everywhere-src-6.4.0-beta3/src/3rdparty/chromium/third_part
                       const void* /*buf*/,
 -                     uLong /*size*/) {
 +                     unsigned long /*size*/) {
-   NOTREACHED();
+   NOTREACHED_IN_MIGRATION();
    return 0;
  }
 @@ -357,7 +357,7 @@ bool ZipOpenNewFileInZip(zipFile zip_fil

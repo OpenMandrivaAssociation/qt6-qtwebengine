@@ -1,4 +1,4 @@
-#define beta rc2
+%define beta rc
 #define snapshot 20200627
 %define major 6
 
@@ -12,8 +12,8 @@
 #define _builddir /tmp/b
 
 Name:		qt6-qtwebengine
-Version:	6.8.2
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}4
+Version:	6.9.0
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
@@ -37,6 +37,7 @@ Patch2000:	https://sources.debian.org/data/main/c/chromium/124.0.6367.155-1/debi
 Patch2001:	https://sources.debian.org/data/main/c/chromium/124.0.6367.155-1/debian/patches/fixes/widevine-locations.patch
 Patch2002:	https://raw.githubusercontent.com/OpenMandrivaAssociation/chromium/master/chromium-extra-widevine-search-paths.patch
 Patch2003:	https://src.fedoraproject.org/rpms/chromium/raw/rawhide/f/chromium-107-proprietary-codecs.patch
+Patch2004:	chromium-133-pipewire-compile.patch
 Group:		System/Libraries
 Summary:	Qt %{major} Web Engine - a web browser library for Qt
 BuildRequires:	cmake
