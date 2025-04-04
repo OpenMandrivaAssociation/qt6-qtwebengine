@@ -1,4 +1,4 @@
-%define beta rc
+#define beta rc
 #define snapshot 20200627
 %define major 6
 
@@ -13,7 +13,7 @@
 
 Name:		qt6-qtwebengine
 Version:	6.9.0
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}2
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
