@@ -1,0 +1,15 @@
+diff -up qtwebengine-everywhere-src-6.9.0/src/3rdparty/chromium/third_party/blink/renderer/build/scripts/gperf.py.omv~ qtwebengine-everywhere-src-6.9.0/src/3rdparty/chromium/third_party/blink/renderer/build/scripts/gperf.py
+--- qtwebengine-everywhere-src-6.9.0/src/3rdparty/chromium/third_party/blink/renderer/build/scripts/gperf.py.omv~	2025-04-27 02:31:46.711323894 +0200
++++ qtwebengine-everywhere-src-6.9.0/src/3rdparty/chromium/third_party/blink/renderer/build/scripts/gperf.py	2025-04-27 02:32:14.122458159 +0200
+@@ -37,8 +37,9 @@ def generate_gperf(gperf_path, gperf_inp
+         # -Wimplicit-fallthrough needs an explicit fallthrough statement,
+         # so replace gperf's /*FALLTHROUGH*/ comment with the statement.
+         # https://savannah.gnu.org/bugs/index.php?53029
+-        gperf_output = gperf_output.replace('/*FALLTHROUGH*/',
+-                                            '  [[fallthrough]];')
++        # This is no longer needed with gperf >= 3.2
++        #gperf_output = gperf_output.replace('/*FALLTHROUGH*/',
++        #                                    '  [[fallthrough]];')
+         # -Wpointer-to-int-cast warns about casting pointers to smaller ints
+         # Replace {(int)(long)&(foo), bar} with
+         # {static_cast<int>(reinterpret_cast<uintptr_t>(&(foo)), bar}

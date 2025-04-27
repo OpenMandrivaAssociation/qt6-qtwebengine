@@ -28,6 +28,7 @@ Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
 # https://codereview.qt-project.org/c/qt/qtwebengine-chromium/+/641190
 Patch3:		a55ef9d.diff
 Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
+Patch5:		qtwebengine-6.9.0-gperf-3.2+.patch
 #Patch6:		qtwebengine-6.7.0-compile.patch
 # Try to restore a sufficient amount of binary compatibility between the
 # internalized copy of absl (which can't be disabled yet) and the system
