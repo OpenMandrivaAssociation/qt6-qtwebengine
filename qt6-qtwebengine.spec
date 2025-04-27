@@ -13,7 +13,7 @@
 
 Name:		qt6-qtwebengine
 Version:	6.9.0
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}2
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}3
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
@@ -29,7 +29,9 @@ Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
 Patch3:		a55ef9d.diff
 Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
 Patch5:		qtwebengine-6.9.0-gperf-3.2+.patch
-#Patch6:		qtwebengine-6.7.0-compile.patch
+# https://bugreports.qt.io/browse/QTBUG-136122
+# https://codereview.qt-project.org/c/qt/qtwebengine-chromium/+/630511
+Patch6:		03c7dcc.diff
 # Try to restore a sufficient amount of binary compatibility between the
 # internalized copy of absl (which can't be disabled yet) and the system
 # version (used, among others, by the system version of re2, which DOES
