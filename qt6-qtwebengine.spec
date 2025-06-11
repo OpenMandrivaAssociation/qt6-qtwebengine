@@ -12,8 +12,8 @@
 #define _builddir /tmp/b
 
 Name:		qt6-qtwebengine
-Version:	6.9.0
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}3
+Version:	6.9.1
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
@@ -24,14 +24,8 @@ Source:		http://download.qt-project.org/%{?beta:development}%{!?beta:official}_r
 %endif
 Patch1:		qtwebengine-6.4.0b3-buildfixes.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
-# https://bugreports.qt.io/browse/QTBUG-135935
-# https://codereview.qt-project.org/c/qt/qtwebengine-chromium/+/641190
-Patch3:		a55ef9d.diff
 Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
 Patch5:		qtwebengine-6.9.0-gperf-3.2+.patch
-# https://bugreports.qt.io/browse/QTBUG-136122
-# https://codereview.qt-project.org/c/qt/qtwebengine-chromium/+/630511
-Patch6:		03c7dcc.diff
 # Try to restore a sufficient amount of binary compatibility between the
 # internalized copy of absl (which can't be disabled yet) and the system
 # version (used, among others, by the system version of re2, which DOES
@@ -43,7 +37,6 @@ Patch2000:	https://sources.debian.org/data/main/c/chromium/124.0.6367.155-1/debi
 Patch2001:	https://sources.debian.org/data/main/c/chromium/124.0.6367.155-1/debian/patches/fixes/widevine-locations.patch
 Patch2002:	https://raw.githubusercontent.com/OpenMandrivaAssociation/chromium/master/chromium-extra-widevine-search-paths.patch
 Patch2003:	https://src.fedoraproject.org/rpms/chromium/raw/rawhide/f/chromium-107-proprietary-codecs.patch
-Patch2004:	chromium-133-pipewire-compile.patch
 Group:		System/Libraries
 Summary:	Qt %{major} Web Engine - a web browser library for Qt
 BuildRequires:	cmake
