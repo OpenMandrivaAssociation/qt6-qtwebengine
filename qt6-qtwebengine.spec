@@ -1,4 +1,4 @@
-#define beta rc
+%define beta beta2
 #define snapshot 20200627
 %define major 6
 
@@ -12,7 +12,7 @@
 #define _builddir /tmp/b
 
 Name:		qt6-qtwebengine
-Version:	6.9.1
+Version:	6.10.0
 Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
@@ -25,7 +25,7 @@ Source:		http://download.qt-project.org/%{?beta:development}%{!?beta:official}_r
 Patch1:		qtwebengine-6.4.0b3-buildfixes.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
 Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
-Patch5:		qtwebengine-6.9.0-gperf-3.2+.patch
+#Patch5:		qtwebengine-6.9.0-gperf-3.2+.patch
 # Try to restore a sufficient amount of binary compatibility between the
 # internalized copy of absl (which can't be disabled yet) and the system
 # version (used, among others, by the system version of re2, which DOES
