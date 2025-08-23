@@ -1,4 +1,4 @@
-%define beta beta2
+%define beta beta3
 #define snapshot 20200627
 %define major 6
 
@@ -34,7 +34,6 @@ Patch6:		qtwebengine-6.10.0-clang21.patch
 #Patch5:		qtwebengine-re2-absl-compat.patch
 # Patches 2000 to 3000 are applied to the builtin Chromium sources and
 # should be kept in sync with the chromium package where applicable.
-Patch2000:	https://sources.debian.org/data/main/c/chromium/124.0.6367.155-1/debian/patches/fixes/widevine-revision.patch
 Patch2001:	https://sources.debian.org/data/main/c/chromium/124.0.6367.155-1/debian/patches/fixes/widevine-locations.patch
 Patch2002:	https://raw.githubusercontent.com/OpenMandrivaAssociation/chromium/master/chromium-extra-widevine-search-paths.patch
 Patch2003:	https://src.fedoraproject.org/rpms/chromium/raw/rawhide/f/chromium-107-proprietary-codecs.patch

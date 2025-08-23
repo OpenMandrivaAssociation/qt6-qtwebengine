@@ -1,7 +1,7 @@
-diff -up qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/build/config/clang/BUILD.gn.1~ qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/build/config/clang/BUILD.gn
---- qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/build/config/clang/BUILD.gn.1~	2025-03-09 20:36:47.000000000 +0100
-+++ qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/build/config/clang/BUILD.gn	2025-03-16 16:37:31.316671629 +0100
-@@ -150,6 +150,11 @@ config("extra_warnings") {
+diff -up qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/build/config/clang/BUILD.gn.1~ qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/build/config/clang/BUILD.gn
+--- qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/build/config/clang/BUILD.gn.1~	2025-08-15 20:30:00.000000000 +0200
++++ qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/build/config/clang/BUILD.gn	2025-08-23 22:48:56.507563841 +0200
+@@ -127,6 +127,11 @@ config("extra_warnings") {
      "-Wstring-conversion",
  
      "-Wtautological-overlap-compare",
@@ -13,10 +13,10 @@ diff -up qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/build/config/
    ]
  }
  
-diff -up qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc.1~ qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc
---- qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc.1~	2025-03-09 20:36:47.000000000 +0100
-+++ qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc	2025-03-16 17:41:02.611160062 +0100
-@@ -177,7 +177,7 @@ void* OpenZipBuffer(void* opaque, const
+diff -up qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc.1~ qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc
+--- qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc.1~	2025-08-15 20:30:00.000000000 +0200
++++ qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/third_party/zlib/google/zip_internal.cc	2025-08-23 22:50:13.399043973 +0200
+@@ -176,7 +176,7 @@ void* OpenZipBuffer(void* opaque, const
  
  // Reads compressed data from the specified stream. This function copies data
  // refered by the opaque parameter and returns the size actually copied.
@@ -25,7 +25,7 @@ diff -up qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/third_party/z
    ZipBuffer* buffer = static_cast<ZipBuffer*>(opaque);
    DCHECK_LE(buffer->offset, buffer->length);
    ZPOS64_T remaining_bytes = buffer->length - buffer->offset;
-@@ -192,10 +192,10 @@ uLong ReadZipBuffer(void* opaque, void*
+@@ -191,10 +191,10 @@ uLong ReadZipBuffer(void* opaque, void*
  
  // Writes compressed data to the stream. This function always returns zero
  // because this implementation is only for reading compressed data.
@@ -35,10 +35,10 @@ diff -up qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/third_party/z
                       const void* /*buf*/,
 -                     uLong /*size*/) {
 +                     unsigned long /*size*/) {
-   NOTREACHED_IN_MIGRATION();
-   return 0;
+   NOTREACHED();
  }
-@@ -357,7 +357,7 @@ bool ZipOpenNewFileInZip(zipFile zip_fil
+ 
+@@ -354,7 +354,7 @@ bool ZipOpenNewFileInZip(zipFile zip_fil
                           Compression compression) {
    // Section 4.4.4 http://www.pkware.com/documents/casestudies/APPNOTE.TXT
    // Setting the Language encoding flag so the file is told to be in utf-8.
@@ -47,7 +47,7 @@ diff -up qtwebengine-everywhere-src-6.9.0-rc/src/3rdparty/chromium/third_party/z
  
    const zip_fileinfo file_info = TimeToZipFileInfo(last_modified_time);
    const int err = zipOpenNewFileInZip4_64(
-@@ -370,11 +370,11 @@ bool ZipOpenNewFileInZip(zipFile zip_fil
+@@ -367,11 +367,11 @@ bool ZipOpenNewFileInZip(zipFile zip_fil
        /*size_extrafield_global=*/0u,
        /*comment=*/nullptr,
        /*method=*/compression,

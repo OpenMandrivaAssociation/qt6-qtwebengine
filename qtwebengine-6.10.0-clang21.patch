@@ -1,23 +1,8 @@
-diff -up qtwebengine-everywhere-src-6.10.0-beta2/src/3rdparty/chromium/base/metrics/histogram_macros.h.omv~ qtwebengine-everywhere-src-6.10.0-beta2/src/3rdparty/chromium/base/metrics/histogram_macros.h
---- qtwebengine-everywhere-src-6.10.0-beta2/src/3rdparty/chromium/base/metrics/histogram_macros.h.omv~	2025-08-18 02:08:56.815108957 +0200
-+++ qtwebengine-everywhere-src-6.10.0-beta2/src/3rdparty/chromium/base/metrics/histogram_macros.h	2025-08-18 02:10:46.740210600 +0200
-@@ -81,10 +81,10 @@
- // enum to an arithmetic type and adding one. Instead, prefer the two argument
- // version of the macro which automatically deduces the boundary from kMaxValue.
- #define UMA_HISTOGRAM_ENUMERATION(name, ...)                            \
--  CR_EXPAND_ARG(INTERNAL_UMA_HISTOGRAM_ENUMERATION_GET_MACRO(           \
-+  INTERNAL_UMA_HISTOGRAM_ENUMERATION_GET_MACRO(                         \
-       __VA_ARGS__, INTERNAL_UMA_HISTOGRAM_ENUMERATION_SPECIFY_BOUNDARY, \
-       INTERNAL_UMA_HISTOGRAM_ENUMERATION_DEDUCE_BOUNDARY)               \
--  (name, __VA_ARGS__, base::HistogramBase::kUmaTargetedHistogramFlag))
-+  (name, __VA_ARGS__, base::HistogramBase::kUmaTargetedHistogramFlag)
- 
- // As above but "scaled" count to avoid overflows caused by increments of
- // large amounts. See UMA_HISTOGRAM_SCALED_EXACT_LINEAR for more information.
-diff -up qtwebengine-everywhere-src-6.10.0-beta2/src/3rdparty/chromium/content/browser/webid/federated_auth_request_impl.cc.omv~ qtwebengine-everywhere-src-6.10.0-beta2/src/3rdparty/chromium/content/browser/webid/federated_auth_request_impl.cc
---- qtwebengine-everywhere-src-6.10.0-beta2/src/3rdparty/chromium/content/browser/webid/federated_auth_request_impl.cc.omv~	2025-08-18 19:11:28.378269217 +0200
-+++ qtwebengine-everywhere-src-6.10.0-beta2/src/3rdparty/chromium/content/browser/webid/federated_auth_request_impl.cc	2025-08-18 19:11:36.464988797 +0200
-@@ -2467,7 +2467,7 @@ void FederatedAuthRequestImpl::ShowModal
+diff -up qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/base/metrics/histogram_macros.h.4~ qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/base/metrics/histogram_macros.h
+diff -up qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/content/browser/webid/federated_auth_request_impl.cc.4~ qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/content/browser/webid/federated_auth_request_impl.cc
+--- qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/content/browser/webid/federated_auth_request_impl.cc.4~	2025-08-15 20:30:00.000000000 +0200
++++ qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/content/browser/webid/federated_auth_request_impl.cc	2025-08-23 22:51:04.957978442 +0200
+@@ -2501,7 +2501,7 @@ void FederatedAuthRequestImpl::ShowModal
    // dialog?
    dialog_type_ = dialog_type;
    config_url_ = idp_config_url;
@@ -26,10 +11,10 @@ diff -up qtwebengine-everywhere-src-6.10.0-beta2/src/3rdparty/chromium/content/b
  
    WebContents* web_contents = request_dialog_controller_->ShowModalDialog(
        url_to_show, rp_mode_,
-diff -up qtwebengine-everywhere-src-6.10.0-beta2/src/3rdparty/chromium/sandbox/policy/linux/sandbox_linux.cc.omv~ qtwebengine-everywhere-src-6.10.0-beta2/src/3rdparty/chromium/sandbox/policy/linux/sandbox_linux.cc
---- qtwebengine-everywhere-src-6.10.0-beta2/src/3rdparty/chromium/sandbox/policy/linux/sandbox_linux.cc.omv~	2025-08-18 01:57:34.053137582 +0200
-+++ qtwebengine-everywhere-src-6.10.0-beta2/src/3rdparty/chromium/sandbox/policy/linux/sandbox_linux.cc	2025-08-18 15:17:01.651920368 +0200
-@@ -708,7 +708,8 @@ void SandboxLinux::ReportLandlockStatus(
+diff -up qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/sandbox/policy/linux/sandbox_linux.cc.4~ qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/sandbox/policy/linux/sandbox_linux.cc
+--- qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/sandbox/policy/linux/sandbox_linux.cc.4~	2025-08-15 20:30:00.000000000 +0200
++++ qtwebengine-everywhere-src-6.10.0-beta3/src/3rdparty/chromium/sandbox/policy/linux/sandbox_linux.cc	2025-08-23 22:51:04.958231659 +0200
+@@ -697,7 +697,8 @@ void SandboxLinux::ReportLandlockStatus(
      landlock_state = LandlockState::kEnabled;
    }
  
