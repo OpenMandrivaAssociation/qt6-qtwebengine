@@ -24,6 +24,7 @@ Source:		http://download.qt-project.org/%{?beta:development}%{!?beta:official}_r
 %endif
 Patch1:		qtwebengine-6.4.0b3-buildfixes.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
+Patch3:		qtwebengine-ffmpeg-8.0.patch
 Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
 #Patch5:		qtwebengine-6.9.0-gperf-3.2+.patch
 Patch6:		qtwebengine-6.10.0-clang21.patch
