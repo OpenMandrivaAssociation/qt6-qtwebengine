@@ -1,0 +1,15 @@
+diff -up qtwebengine-everywhere-src-6.10.0-rc/src/3rdparty/chromium/third_party/abseil-cpp/absl/base/config.h.omv~ qtwebengine-everywhere-src-6.10.0-rc/src/3rdparty/chromium/third_party/abseil-cpp/absl/base/config.h
+--- qtwebengine-everywhere-src-6.10.0-rc/src/3rdparty/chromium/third_party/abseil-cpp/absl/base/config.h.omv~	2025-09-29 02:55:07.977343138 +0200
++++ qtwebengine-everywhere-src-6.10.0-rc/src/3rdparty/chromium/third_party/abseil-cpp/absl/base/config.h	2025-09-29 02:57:02.301094813 +0200
+@@ -45,6 +45,11 @@
+ //   ...
+ //   #endif  // ABSL_HAVE_MMAP
+ 
++// Some stuff expected here doesn't exist anymore in current absl, so fake it
++#define ABSL_OPTION_USE_STD_ANY 1
++#define ABSL_OPTION_USE_STD_OPTIONAL 1
++#define ABSL_OPTION_USE_STD_VARIANT 1
++
+ #ifndef ABSL_BASE_CONFIG_H_
+ #define ABSL_BASE_CONFIG_H_
+ 
