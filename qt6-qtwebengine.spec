@@ -12,8 +12,8 @@
 #define _builddir /tmp/b
 
 Name:		qt6-qtwebengine
-Version:	6.10.1
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}4
+Version:	6.10.2
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
@@ -28,8 +28,6 @@ Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
 #Patch5:		qtwebengine-6.9.0-gperf-3.2+.patch
 #Patch6:		qtwebengine-6.10.0-clang21.patch
 Patch7:		qtwebengine-6.10-absl-25.08.patch
-# https://codereview.qt-project.org/c/qt/qtwebengine/+/702860
-Patch8:		4b2f03a.diff
 # Patches 2000 to 3000 are applied to the builtin Chromium sources and
 # should be kept in sync with the chromium package where applicable.
 Patch2001:	https://sources.debian.org/data/main/c/chromium/124.0.6367.155-1/debian/patches/fixes/widevine-locations.patch
