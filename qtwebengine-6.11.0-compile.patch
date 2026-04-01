@@ -1,0 +1,12 @@
+diff -up qtwebengine-everywhere-src-6.11.0/src/3rdparty/chromium/third_party/skia/modules/skcms/src/Transform_inl.h.omv~ qtwebengine-everywhere-src-6.11.0/src/3rdparty/chromium/third_party/skia/modules/skcms/src/Transform_inl.h
+--- qtwebengine-everywhere-src-6.11.0/src/3rdparty/chromium/third_party/skia/modules/skcms/src/Transform_inl.h.omv~	2026-04-01 16:08:08.964261842 +0200
++++ qtwebengine-everywhere-src-6.11.0/src/3rdparty/chromium/third_party/skia/modules/skcms/src/Transform_inl.h	2026-04-01 16:08:27.289907787 +0200
+@@ -160,7 +160,7 @@ SI F F_from_Half(U16 half) {
+     return vcvt_f32_f16((float16x4_t)half);
+ #elif defined(USING_AVX512F)
+     return (F)_mm512_cvtph_ps((__m256i)half);
+-#elif defined(USING_AVX_F16C)
++#elif defined(USING_AVX_F16C) && !defined(__clang__)
+     typedef int16_t __attribute__((vector_size(16))) I16;
+     return __builtin_ia32_vcvtph2ps256((I16)half);
+ #else
