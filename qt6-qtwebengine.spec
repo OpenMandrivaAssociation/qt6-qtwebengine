@@ -176,6 +176,9 @@ Requires: %{name} = %{EVRD}
 %{_qtdir}/lib/cmake/Qt6/FindNodejs.cmake \
 %{_qtdir}/lib/cmake/Qt6/FindPkgConfigHost.cmake \
 %{_qtdir}/lib/cmake/Qt6/FindSnappy.cmake \
+%{_qtdir}/lib/cmake/Qt6/FindBindgen.cmake \
+%{_qtdir}/lib/cmake/Qt6/FindQWELibClang.cmake \
+%{_qtdir}/lib/cmake/Qt6/FindRust.cmake \
 %{_qtdir}/lib/cmake/Qt6BuildInternals/StandaloneTests/QtWebEngineTestsConfig.cmake \
 %{_qtdir}/libexec/gn \
 %{_qtdir}/libexec/qwebengine_convert_dict \
