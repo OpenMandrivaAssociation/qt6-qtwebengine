@@ -4,7 +4,7 @@
 
 # Try limit cores on ARM Altra to 80 to prevent constant RAM outages
 %ifarch aarch64
-%_smp_build_nthreads 80
+%global _smp_build_nthreads 80
 %endif
 
 # Until we can return to building with clang
