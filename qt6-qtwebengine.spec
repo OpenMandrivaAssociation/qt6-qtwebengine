@@ -2,6 +2,11 @@
 #define snapshot 20200627
 %define major 6
 
+# Try limit cores on ARM Altra to 80 to prevent constant RAM outages
+%ifarch aarch64
+%_smp_build_nthreads 80
+%endif
+
 # Until we can return to building with clang
 %define _disable_lto 1
 
