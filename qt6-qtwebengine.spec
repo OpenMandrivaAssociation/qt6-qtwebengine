@@ -268,7 +268,7 @@ cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/absei
 		export RPM_BUILD_NCPUS=$(( %{_smp_build_ncpus}/2 ))
 	%endif
 	# Try limit cores on ARM Emag to 16 to prevent constant RAM outages
-	%if	0%{?_smp_build_ncpus} >= 32
+	%if	0%{?_smp_build_ncpus} == 32
 		export RPM_BUILD_NCPUS=$(( %{_smp_build_ncpus}/2 ))
 	%endif
 %endif
