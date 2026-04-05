@@ -2,11 +2,6 @@
 #define snapshot 20200627
 %define major 6
 
-# Try limit cores on ARM Altra to 80 to prevent constant RAM outages
-%ifarch aarch64
-%global _smp_build_nthreads 80
-%endif
-
 # Until we can return to building with clang
 %define _disable_lto 1
 
@@ -264,6 +259,19 @@ cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/absei
 	-DFEATURE_webengine_webrtc_pipewire:BOOL=ON \
 	-DFEATURE_webengine_vaapi:BOOL=ON \
 	-DFEATURE_webengine_vulkan:BOOL=ON
+
+# Limit build cores on aarch64
+%build -p
+%ifarch aarch64
+	# Try limit cores on ARM Altra to 80 to prevent constant RAM outages
+	%if 0%{?_smp_build_ncpus} >= 160
+		export RPM_BUILD_NCPUS=$(( %{_smp_build_ncpus}/2 ))
+	%endif
+	# Try limit cores on ARM Emag to 16 to prevent constant RAM outages
+	%if	0%{?_smp_build_ncpus} >= 32
+		export RPM_BUILD_NCPUS=$(( %{_smp_build_ncpus}/2 ))
+	%endif
+%endif
 
 %build
 export LD_LIBRARY_PATH="$(pwd)/build/lib:${LD_LIBRARY_PATH}"
