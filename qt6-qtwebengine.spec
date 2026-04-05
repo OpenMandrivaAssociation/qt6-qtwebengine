@@ -38,6 +38,8 @@ Group:		System/Libraries
 Summary:	Qt %{major} Web Engine - a web browser library for Qt
 BuildRequires:	cmake
 BuildRequires:	ninja
+# RPM macros for handling memory constrained builders
+BuildRequires:	rpm-memory-constraints
 BuildRequires:	cmake(Qt%{major}Core)
 BuildRequires:	cmake(Qt%{major}Gui)
 BuildRequires:	cmake(Qt%{major}Network)
@@ -260,20 +262,15 @@ cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/absei
 	-DFEATURE_webengine_vaapi:BOOL=ON \
 	-DFEATURE_webengine_vulkan:BOOL=ON
 
-# Limit build cores on aarch64
-%build -p
-%ifarch aarch64
-	# Try limit cores on ARM Altra to 80 to prevent constant RAM outages
-	%if 0%{?_smp_build_ncpus} >= 160
-		export RPM_BUILD_NCPUS=$(( %{_smp_build_ncpus}/2 ))
-	%endif
-	# Try limit cores on ARM Emag to 16 to prevent constant RAM outages
-	%if	0%{?_smp_build_ncpus} == 32
-		export RPM_BUILD_NCPUS=$(( %{_smp_build_ncpus}/2 ))
-	%endif
-%endif
-
 %build
+# Determine the correct number of parallel processes based on the available
+# memory; -m memory in MB per core.
+%limit_build -m 2750
+
+# Ensure the internal chromium build also uses the correct number of
+# parallel processes instead of its own defaults.
+export NINJAFLAGS="%{?_smp_mflags}"
+
 export LD_LIBRARY_PATH="$(pwd)/build/lib:${LD_LIBRARY_PATH}"
 %ninja_build -C build
 
