@@ -265,7 +265,7 @@ cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/absei
 %build
 # Determine the correct number of parallel processes based on the available
 # memory; -m memory in MB per core.
-%limit_build -m 4000
+%limit_build -m 4250
 
 # Ensure the internal chromium build also uses the correct number of
 # parallel processes instead of its own defaults.
