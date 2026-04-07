@@ -234,6 +234,19 @@ cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/absei
 # Chromium isn't compatible with std::optional though
 #sed -i -e 's,#define ABSL_OPTION_USE_STD_OPTIONAL 1,#define ABSL_OPTION_USE_STD_OPTIONAL 0,' src/3rdparty/chromium/third_party/abseil-cpp/absl/base/options.h
 
+# NOTE This is done here and applied at the configure stage because the internal
+# NOTE builds are run recursively, which ignores any cpu limitation applied to
+# NOTE the rpm build, thus we have to apply it to the NINJAFLAGS env variabel
+# NOTE which is consumed by the src/gn/CMakeLists.txt and applied to the recursive
+# NOTE internal builds it runs, i.e. chromium/etc.
+# Determine the correct number of parallel processes based on the available
+# memory; -m memory in MB per core.
+%limit_build -m 6000
+
+# Ensure the internal chromium build also uses the correct number of
+# parallel processes instead of its own defaults.
+export NINJAFLAGS="%{?_smp_mflags}"
+
 # FIXME We probably want
 # -DFEATURE_webengine_system_libvpx:BOOL=ON
 # but cmake claims it's incompatible with VAAPI
@@ -263,13 +276,10 @@ cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/absei
 	-DFEATURE_webengine_vulkan:BOOL=ON
 
 %build
+# NOTE This is reapplied here to take effect in the rpm build stage.
 # Determine the correct number of parallel processes based on the available
 # memory; -m memory in MB per core.
 %limit_build -m 6000
-
-# Ensure the internal chromium build also uses the correct number of
-# parallel processes instead of its own defaults.
-export NINJAFLAGS="%{?_smp_mflags}"
 
 export LD_LIBRARY_PATH="$(pwd)/build/lib:${LD_LIBRARY_PATH}"
 %ninja_build -C build
