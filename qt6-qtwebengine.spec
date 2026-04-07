@@ -5,13 +5,6 @@
 # Until we can return to building with clang
 %define _disable_lto 1
 
-%ifarch aarch64
-# Try save some memory on ARM
-%global debug_config %{nil}
-%global _find_debuginfo_opts %{nil}
-%undefine _debugsource_packages
-%endif
-
 %define _qtdir %{_libdir}/qt%{major}
 
 # Use this if you get "filename too long" errors:
@@ -267,18 +260,12 @@ cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/absei
 	-DFEATURE_webengine_system_ninja:BOOL=ON \
 	-DFEATURE_webengine_webrtc_pipewire:BOOL=ON \
 	-DFEATURE_webengine_vaapi:BOOL=ON \
-	-DFEATURE_webengine_vulkan:BOOL=ON \
-%ifarch aarch64
-    -DCMAKE_BUILD_TYPE=Release \
-    -DFEATURE_webengine_debug:BOOL=OFF \
-%else
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo
-%endif
+	-DFEATURE_webengine_vulkan:BOOL=ON
 
 %build
 # Determine the correct number of parallel processes based on the available
 # memory; -m memory in MB per core.
-%limit_build -m 4500
+%limit_build -m 6000
 
 # Ensure the internal chromium build also uses the correct number of
 # parallel processes instead of its own defaults.
