@@ -241,7 +241,7 @@ cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/absei
 # NOTE internal builds it runs, i.e. chromium/etc.
 # Determine the correct number of parallel processes based on the available
 # memory; -m memory in MB per core.
-%limit_build -m 8000
+%limit_build -m 10000
 
 # Ensure the internal chromium build also uses the correct number of
 # parallel processes instead of its own defaults.
@@ -279,7 +279,7 @@ export NINJAFLAGS="%{?_smp_mflags}"
 # NOTE This is reapplied here to take effect in the rpm build stage.
 # Determine the correct number of parallel processes based on the available
 # memory; -m memory in MB per core.
-%limit_build -m 8000
+%limit_build -m 10000
 
 export LD_LIBRARY_PATH="$(pwd)/build/lib:${LD_LIBRARY_PATH}"
 %ninja_build -C build
