@@ -251,6 +251,11 @@ export NINJAFLAGS="%{?_smp_mflags}"
 # See src/3rdparty/chromium/build/docs/debugging_slow_builds.md
 export NINJA_SUMMARIZE_BUILD=1
 
+%ifarch aarch64
+# force -mno-outline-atomics through the gn build for aarch64
+sed -e 's/cflags = \[\]/cflags = \[ \"-mno-outline-atomics\" \]/' -i ./src/3rdparty/chromium/build/config/linux/BUILD.gn
+%endif
+
 # FIXME We probably want
 # -DFEATURE_webengine_system_libvpx:BOOL=ON
 # but cmake claims it's incompatible with VAAPI
