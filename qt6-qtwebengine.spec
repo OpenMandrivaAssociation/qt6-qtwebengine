@@ -280,7 +280,7 @@ export NINJAFLAGS="%{?_smp_mflags}"
 # Determine the correct number of parallel processes based on the available
 # memory; -m memory in MB per core.
 %limit_build -m 24000
-
+export NINJAFLAGS="%{?_smp_mflags}"
 export LD_LIBRARY_PATH="$(pwd)/build/lib:${LD_LIBRARY_PATH}"
 %ninja_build -C build
 
