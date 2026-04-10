@@ -1,0 +1,13 @@
+diff -up qtwebengine-everywhere-src-6.11.0/src/3rdparty/chromium/third_party/blink/renderer/bindings/scripts/generate_bindings.py.omv~ qtwebengine-everywhere-src-6.11.0/src/3rdparty/chromium/third_party/blink/renderer/bindings/scripts/generate_bindings.py
+--- qtwebengine-everywhere-src-6.11.0/src/3rdparty/chromium/third_party/blink/renderer/bindings/scripts/generate_bindings.py.omv~	2026-04-10 22:51:32.619786695 +0100
++++ qtwebengine-everywhere-src-6.11.0/src/3rdparty/chromium/third_party/blink/renderer/bindings/scripts/generate_bindings.py	2026-04-10 22:52:07.979870911 +0100
+@@ -85,6 +85,9 @@ def parse_options(valid_tasks):
+ 
+ 
+ def main():
++    import multiprocessing
++    multiprocessing.set_start_method('fork', force=True)
++
+     dispatch_table = {
+         'async_iterator': bind_gen.generate_async_iterators,
+         'callback_function': bind_gen.generate_callback_functions,

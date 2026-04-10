@@ -29,6 +29,7 @@ Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
 #Patch5:		qtwebengine-6.9.0-gperf-3.2+.patch
 #Patch6:		qtwebengine-6.10.0-clang21.patch
 Patch7:		qtwebengine-6.10-absl-25.08.patch
+Patch8:		qtwebengine-6.11.0-fix-hang-while-building-on-aarch64.patch
 # Patches 2000 to 3000 are applied to the builtin Chromium sources and
 # should be kept in sync with the chromium package where applicable.
 Patch2001:	https://sources.debian.org/data/main/c/chromium/124.0.6367.155-1/debian/patches/fixes/widevine-locations.patch
@@ -241,7 +242,7 @@ cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/absei
 # NOTE internal builds it runs, i.e. chromium/etc.
 # Determine the correct number of parallel processes based on the available
 # memory; -m memory in MB per core.
-%limit_build -m 26000
+%limit_build -m 2048
 
 # Ensure the internal chromium build also uses the correct number of
 # parallel processes instead of its own defaults.
@@ -288,7 +289,7 @@ sed -e 's/cflags = \[\]/cflags = \[ \"-mno-outline-atomics\" \]/' -i ./src/3rdpa
 # NOTE This is reapplied here to take effect in the rpm build stage.
 # Determine the correct number of parallel processes based on the available
 # memory; -m memory in MB per core.
-%limit_build -m 26000
+%limit_build -m 2048
 export NINJAFLAGS="%{?_smp_mflags}"
 export NINJA_SUMMARIZE_BUILD=1
 export LD_LIBRARY_PATH="$(pwd)/build/lib:${LD_LIBRARY_PATH}"
