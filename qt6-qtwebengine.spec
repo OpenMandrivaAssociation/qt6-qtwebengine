@@ -12,8 +12,8 @@
 #define _builddir /tmp/b
 
 Name:		qt6-qtwebengine
-Version:	6.11.0
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}3
+Version:	6.11.1
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
@@ -24,7 +24,6 @@ Source:		https://download.qt.io/%{?beta:development}%{!?beta:official}_releases/
 %endif
 Patch1:		qtwebengine-6.4.0b3-buildfixes.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
-Patch3:		qtwebengine-6.11.0-compile.patch
 Patch4:		qtwebengine-6.5.0-aarch64-compile.patch
 #Patch5:		qtwebengine-6.9.0-gperf-3.2+.patch
 #Patch6:		qtwebengine-6.10.0-clang21.patch
@@ -179,9 +178,9 @@ Requires: %{name} = %{EVRD}
 %{_qtdir}/lib/cmake/Qt6/FindNodejs.cmake \
 %{_qtdir}/lib/cmake/Qt6/FindPkgConfigHost.cmake \
 %{_qtdir}/lib/cmake/Qt6/FindSnappy.cmake \
-%{_qtdir}/lib/cmake/Qt6/FindBindgen.cmake \
 %{_qtdir}/lib/cmake/Qt6/FindQWELibClang.cmake \
-%{_qtdir}/lib/cmake/Qt6/FindRust.cmake \
+%{_qtdir}/lib/cmake/Qt6/FindQWEBindgen.cmake \
+%{_qtdir}/lib/cmake/Qt6/FindQWERust.cmake \
 %{_qtdir}/lib/cmake/Qt6BuildInternals/StandaloneTests/QtWebEngineTestsConfig.cmake \
 %{_qtdir}/libexec/gn \
 %{_qtdir}/libexec/qwebengine_convert_dict \
