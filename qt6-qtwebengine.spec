@@ -13,7 +13,7 @@
 
 Name:		qt6-qtwebengine
 Version:	6.11.1
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}3
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}4
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
@@ -234,15 +234,27 @@ cd src/3rdparty/chromium
 cd -
 
 # Until we can figure out how to kill the internal absl, let's at least
-# try to make it ABI compatible with the system copy (as used by re2...)
+# try to make it ABI compatible with the system copy (as used by re2...).
+# System abseil LTS options.h dropped USE_STD_STRING_VIEW (always std::string_view)
+# and USE_STD_{ANY,OPTIONAL,VARIANT}; Chromium's config.h still requires them →
+# "#error options.h is misconfigured" without the appends below.
 cp -f %{_includedir}/absl/base/options.h src/3rdparty/chromium/third_party/abseil-cpp/absl/base/options.h
-# Chromium's bundled absl is not compatible with all system absl options
-# (std::optional / some newer std::* toggles → "options.h is misconfigured").
-sed -i \
-	-e 's,#define ABSL_OPTION_USE_STD_OPTIONAL 1,#define ABSL_OPTION_USE_STD_OPTIONAL 0,' \
-	-e 's,#define ABSL_OPTION_USE_STD_SOURCE_LOCATION 1,#define ABSL_OPTION_USE_STD_SOURCE_LOCATION 0,' \
-	-e 's,#define ABSL_OPTION_USE_STD_ORDERING 1,#define ABSL_OPTION_USE_STD_ORDERING 0,' \
-	src/3rdparty/chromium/third_party/abseil-cpp/absl/base/options.h
+cat >> src/3rdparty/chromium/third_party/abseil-cpp/absl/base/options.h <<'EOF'
+
+/* Compatibility with Chromium's bundled abseil config.h checks */
+#ifndef ABSL_OPTION_USE_STD_STRING_VIEW
+#define ABSL_OPTION_USE_STD_STRING_VIEW 1
+#endif
+#ifndef ABSL_OPTION_USE_STD_ANY
+#define ABSL_OPTION_USE_STD_ANY 1
+#endif
+#ifndef ABSL_OPTION_USE_STD_OPTIONAL
+#define ABSL_OPTION_USE_STD_OPTIONAL 1
+#endif
+#ifndef ABSL_OPTION_USE_STD_VARIANT
+#define ABSL_OPTION_USE_STD_VARIANT 1
+#endif
+EOF
 
 # NOTE This is done here and applied at the configure stage because the internal
 # NOTE builds are run recursively, which ignores any cpu limitation applied to
