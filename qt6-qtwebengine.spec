@@ -1,4 +1,4 @@
-#define beta rc
+%define beta rc
 #define snapshot 20200627
 %define major 6
 
@@ -12,7 +12,7 @@
 #define _builddir /tmp/b
 
 Name:		qt6-qtwebengine
-Version:	6.11.2
+Version:	6.140.0
 Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
@@ -20,7 +20,9 @@ Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
 Source1:	qtwebengine-chromium-122-%{snapshot}.tar.zst
 Source1000:	package-source.sh
 %else
-Source:		https://download.qt.io/%{?beta:development}%{!?beta:official}_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}%{?beta:-%{beta}}/submodules/qtwebengine-everywhere-src-%{version}%{?beta:-%{beta}}.tar.xz
+# WebEngine left the Qt module set in 6.12. Tarballs live under qtwebengine/,
+# not qt/<major.minor>/<version>/submodules/.
+Source:		https://download.qt.io/%{?beta:development}%{!?beta:official}_releases/qtwebengine/%{version}%{?beta:-%{beta}}/qtwebengine-everywhere-src-%{version}%{?beta:-%{beta}}.tar.xz
 %endif
 Patch1:		qtwebengine-6.4.0b3-buildfixes.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
@@ -31,9 +33,11 @@ Patch7:		qtwebengine-6.10-absl-25.08.patch
 Patch8:		qtwebengine-6.11.0-fix-hang-while-building-on-aarch64.patch
 # Patches 2000 to 3000 are applied to the builtin Chromium sources and
 # should be kept in sync with the chromium package where applicable.
-Patch2001:	https://sources.debian.org/data/main/c/chromium/124.0.6367.155-1/debian/patches/fixes/widevine-locations.patch
-Patch2002:	https://raw.githubusercontent.com/OpenMandrivaAssociation/chromium/master/chromium-extra-widevine-search-paths.patch
-Patch2003:	https://src.fedoraproject.org/rpms/chromium/raw/rawhide/f/chromium-107-proprietary-codecs.patch
+# Vendored. The Debian snapshot for Patch2001 is gone, and the Fedora
+# rawhide copy of the codecs patch no longer matches this Chromium.
+Patch2001:	widevine-locations.patch
+Patch2002:	chromium-extra-widevine-search-paths.patch
+Patch2003:	chromium-107-proprietary-codecs.patch
 Group:		System/Libraries
 Summary:	Qt %{major} Web Engine - a web browser library for Qt
 BuildRequires:	cmake
@@ -219,7 +223,9 @@ Provides:	cmake(Qt%{major}WebEngineQuickDelegatesQmlPrivate) = %{version}
 %qt6libs WebEngineCore WebEngineQuick WebEngineWidgets WebEngineQuickDelegatesQml Pdf PdfQuick PdfWidgets
 
 %prep
-%setup -q -n qtwebengine%{!?snapshot:-everywhere-src-%{version}%{?beta:-%{beta}}}
+# The -rc tarball unpacks to qtwebengine-everywhere-src-6.140.0, without the
+# prerelease suffix that is part of the archive filename.
+%setup -q -n qtwebengine%{!?snapshot:-everywhere-src-%{version}}
 %if 0%{?snapshot:1}
 cd src/3rdparty
 tar xf %{S:1}
@@ -286,6 +292,7 @@ sed -e 's/cflags = \[\]/cflags = \[ \"-mno-outline-atomics\" \]/' -i ./src/3rdpa
 
 %cmake -G Ninja \
 	-DCMAKE_INSTALL_PREFIX=%{_qtdir} \
+	-DQT_BUILD_TESTS:BOOL=OFF \
 	-DQT_BUILD_EXAMPLES:BOOL=ON \
 	-DQT_WILL_INSTALL:BOOL=ON \
 	-DFEATURE_qtpdf_build:BOOL=ON \
