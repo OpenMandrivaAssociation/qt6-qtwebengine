@@ -188,7 +188,10 @@ Requires: %{name} = %{EVRD}
 %{_qtdir}/lib/cmake/Qt6BuildInternals/StandaloneTests/QtWebEngineTestsConfig.cmake \
 %{_qtdir}/libexec/gn \
 %{_qtdir}/libexec/qwebengine_convert_dict \
-%{_qtdir}/sbom/*
+%{_qtdir}/sbom/* \
+%dir %{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides \
+%dir %{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides/WebEngineCore \
+%{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides/WebEngineCore/Override_1000_qtproject.cmake
 
 %global extra_devel_reqprov_WebEngineCore \
 Requires:	cmake(Qt%{major}Positioning)
@@ -196,18 +199,38 @@ Requires:	cmake(Qt%{major}Positioning)
 %global extra_devel_reqprov_WebEngineWidgets \
 Requires:	cmake(Qt%{major}QuickWidgets)
 
+# Lets find_package(Qt6 6.12) accept WebEngine/Pdf 6.140.
+%global extra_devel_files_WebEngineWidgets \
+%dir %{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides \
+%dir %{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides/WebEngineWidgets \
+%{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides/WebEngineWidgets/Override_1000_qtproject.cmake
+
 %global extra_devel_files_Pdf \
-%{_qtdir}/lib/cmake/Qt6Gui/Qt6QPdfPlugin*.cmake
+%{_qtdir}/lib/cmake/Qt6Gui/Qt6QPdfPlugin*.cmake \
+%dir %{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides \
+%dir %{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides/Pdf \
+%{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides/Pdf/Override_1000_qtproject.cmake
 
 %global extra_devel_files_PdfQuick \
-%{_qtdir}/lib/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickplugin*.cmake
+%{_qtdir}/lib/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickplugin*.cmake \
+%dir %{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides \
+%dir %{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides/PdfQuick \
+%{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides/PdfQuick/Override_1000_qtproject.cmake
+
+%global extra_devel_files_PdfWidgets \
+%dir %{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides \
+%dir %{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides/PdfWidgets \
+%{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides/PdfWidgets/Override_1000_qtproject.cmake
 
 %global extra_files_WebEngineQuick \
 %{_qtdir}/qml/QtWebEngine
 
 %global extra_devel_files_WebEngineQuick \
 %{_qtdir}/lib/cmake/Qt6Qml/QmlPlugins/Qt6qtwebenginequickdelegatesplugin*.cmake \
-%{_qtdir}/lib/cmake/Qt6Qml/QmlPlugins/Qt6qtwebenginequickplugin*.cmake
+%{_qtdir}/lib/cmake/Qt6Qml/QmlPlugins/Qt6qtwebenginequickplugin*.cmake \
+%dir %{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides \
+%dir %{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides/WebEngineQuick \
+%{_qtdir}/lib/cmake/Qt6/ConfigVersionOverrides/WebEngineQuick/Override_1000_qtproject.cmake
 
 %global extra_files_Pdf \
 %{_qtdir}/plugins/imageformats/libqpdf.so
