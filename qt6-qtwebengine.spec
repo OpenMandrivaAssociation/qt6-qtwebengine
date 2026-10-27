@@ -38,6 +38,9 @@ Patch8:		qtwebengine-6.11.0-fix-hang-while-building-on-aarch64.patch
 Patch2001:	widevine-locations.patch
 Patch2002:	chromium-extra-widevine-search-paths.patch
 Patch2003:	chromium-107-proprietary-codecs.patch
+# ICU 79 case closures of BMP characters include supplementary code points.
+# V8's Canonicalize() rejects those, so drop them before it runs.
+Patch2004:	qtwebengine-icu79-regexp-nonbmp.patch
 Group:		System/Libraries
 Summary:	Qt %{major} Web Engine - a web browser library for Qt
 BuildRequires:	cmake
