@@ -246,6 +246,12 @@ Requires:	cmake(Qt%{major}QuickWidgets)
 %global extra_devel_reqprov_WebEngineQuickDelegatesQml \
 Provides:	cmake(Qt%{major}WebEngineQuickDelegatesQmlPrivate) = %{version}
 
+# Qt's CMake DEPENDENCIES argument is written into qmldir as a module URI.
+# WebEngine passes QtQuickControls2, which is the C++ module name. The import
+# URI is QtQuick.Controls, and the delegate QML files already import that.
+# Nothing provides qml(QtQuickControls2).
+%global __requires_exclude ^qml\\(QtQuickControls2\\)$
+
 %qt6libs WebEngineCore WebEngineQuick WebEngineWidgets WebEngineQuickDelegatesQml Pdf PdfQuick PdfWidgets
 
 %prep
