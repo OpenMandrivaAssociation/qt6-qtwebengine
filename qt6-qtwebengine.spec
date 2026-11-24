@@ -1,4 +1,4 @@
-%define beta rc
+#define beta rc
 #define snapshot 20200627
 %define major 6
 
@@ -13,16 +13,21 @@
 
 Name:		qt6-qtwebengine
 Version:	6.140.0
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}2
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # Built with package-source.sh (Source1000)
 Source:		qtwebengine-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
 Source1:	qtwebengine-chromium-122-%{snapshot}.tar.zst
 Source1000:	package-source.sh
 %else
-# WebEngine left the Qt module set in 6.12. Tarballs live under qtwebengine/,
-# not qt/<major.minor>/<version>/submodules/.
-Source:		https://download.qt.io/%{?beta:development}%{!?beta:official}_releases/qtwebengine/%{version}%{?beta:-%{beta}}/qtwebengine-everywhere-src-%{version}%{?beta:-%{beta}}.tar.xz
+# WebEngine left the Qt module set in 6.12.
+# Final tarballs: official_releases/qtwebengine/<series>/<version>/src/
+# Prereleases:    development_releases/qtwebengine/<version>-<beta>/
+%if 0%{?beta:1}
+Source:		https://download.qt.io/development_releases/qtwebengine/%{version}-%{beta}/qtwebengine-everywhere-src-%{version}-%{beta}.tar.xz
+%else
+Source:		https://download.qt.io/official_releases/qtwebengine/%(echo %{version}|cut -d. -f1-2)/%{version}/src/qtwebengine-everywhere-src-%{version}.tar.xz
+%endif
 %endif
 Patch1:		qtwebengine-6.4.0b3-buildfixes.patch
 Patch2:		qt6-qtwebengine-6.2.2-workaround-for-__fp16-build-failure-aarch64.patch
